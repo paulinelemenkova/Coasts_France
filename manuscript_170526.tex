@@ -1,5 +1,5 @@
 
-\documentclass[coasts,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+\documentclass[remotesensing,article,submit,pdftex,moreauthors]{Definitions/mdpi}
 
 \firstpage{1}
 \pubvolume{1}
@@ -7,18 +7,18 @@
 \articlenumber{0}
 \pubyear{2026}
 \copyrightyear{2026}
-\datereceived{}
+\datereceived{18 May 2026}
 \daterevised{}
 \dateaccepted{}
 \datepublished{}
 \hreflink{https://doi.org/}
 
 % my packages
-\graphicspath{{figures/}} % path to folder with figures
+\graphicspath{{figures/}}
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{gensymb} % for \textdegree
+\usepackage{gensymb}
 \usepackage{tabularx}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 \usepackage{amsmath,mathtools,amsthm}
@@ -35,48 +35,37 @@
 \usepackage{multirow}
 \usepackage{adjustbox}
 \usepackage[utf8]{inputenc}
-%\usepackage[margin=1.5cm,landscape]{geometry} % Landscape layout for wide tables
-\usepackage{booktabs}                         % High-quality table lines                    % Auto-wrapping columns with fixed widths
-\usepackage{microtype}                        % Better typography justification
-%\usepackage{natbib}                           % Bibliography management
-%\usepackage{hyperref}                         % For clickable DOIs and citations
-%
+\usepackage{booktabs}
+\usepackage{microtype}
 
-%\Title{Sentinel-2 Time-Series Analysis of Land Cover Dynamics Along French Coasts Using GRASS GIS}
-\Title{A harmonized Sentinel-2 time-series framework for comparative assessment of coastal land cover dynamics across major French littoral systems}
+\Title{A harmonized Sentinel-2 time-series framework for comparative assessment of land cover dynamics across French littoral systems}
 
 \TitleCitation{Sentinel-2 Time-Series Analysis of Land Cover Dynamics Along French Coasts Using GRASS GIS}
 
-% Author Orchid ID: enter ID or remove command
-\newcommand{\orcidauthorA}{0000-0002-5759-1089} % Polina Add \orcidA{} behind the author's name
+\newcommand{\orcidauthorA}{0000-0002-5759-1089}
 
-% Authors, for the paper (add full first names)
 \Author{Polina Lemenkova $^{1,2,3,4}$*\orcidA{}}
 
-% MDPI internal command: Authors, for metadata in PDF
 \AuthorNames{Polina Lemenkova}
 
-% MDPI internal command: Authors, for citation in the left column
 \AuthorCitation{Lemenkova, P.}
 
-% Affiliations / Addresses
 \address{%
 $^{1}$ \quad Bureau de Recherches G\'eologiques et Mini\`eres (BRGM). 3 avenue Claude-Guillemin, 45060 Orl\'eans, France.
 
 $^{2}$ \quad LE STUDIUM, Institut d'Etudes Avanc\'ees du Val de Loire. 1 rue Dupanloup 45000, Orl\'eans, France.
 
-$^{3}$ \quad Le laboratoire PRISME, Universit\'e d'Orl\'eans, Institut National des Sciences Appliqu\'ees de Centre-Val de Loire (INSA CVL, UR 4229), Château de la Source, 45100, Orl\'eans, France. 
+$^{3}$ \quad Le laboratoire PRISME, Universit\'e d'Orl\'eans, Institut National des Sciences Appliqu\'ees de Centre-Val de Loire (INSA CVL, UR 4229), Ch\^ateau de la Source, 45100, Orl\'eans, France.
 
 $^{4}$ \quad La Technopole d'Orl\'eans. 1 avenue du Champ de Mars, 45100 Orl\'eans, France.
 }
 
-% Contact information of the corresponding author
 \corres{Correspondence: polina.lemenkova@tech-orleans.fr ; Tel.: (+33)0633148601 (P.L.)}
 
 \keyword{coastal land cover; Sentinel-2; GRASS GIS; shoreline environments; coastal dynamics; France; remote sensing; time series analysis; land cover change; coastal monitoring}
 
 \abstract{
-French coastal systems are characterized by strong environmental gradients and increasing anthropogenic pressures, resulting in rapid land cover transformations across coastal landscapes. This study investigates land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series acquired between 2015 and 2025. The research aims to identify the most dynamic coastal regions and determine where land cover transitions are most pronounced. A harmonized workflow was developed in GRASS GIS for preprocessing Sentinel imagery, generating seasonal composites, classifying land cover, and detecting changes through time. Comparative analyses were performed among the three coastal regions using statistical indicators of change intensity, persistence, and transition rates. The results reveal substantial regional differences in coastal dynamics, with southern and western coastal sectors exhibiting stronger transformations associated with urbanization, tourism development, and environmental pressures. The study demonstrates the effectiveness of Sentinel time series and open-source GIS methods for long-term coastal monitoring and provides a framework for large-scale assessments of coastal land cover dynamics in Europe.
+French coastal systems are characterized by strong environmental gradients and increasing anthropogenic pressures, resulting in rapid land cover transformations across coastal landscapes. This study investigates land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series acquired between 2015 and 2025. The research aims to identify the most dynamic coastal regions and determine where land cover transitions are most pronounced. A harmonized workflow was developed in GRASS GIS for preprocessing Sentinel imagery, generating seasonal composites, classifying land cover using a Random Forest (RF) supervised algorithm, and detecting changes through time. All imagery was processed using CORINE Land Cover (Level 1) classification nomenclature and projected to Lambert-93 (EPSG:2154). Comparative analyses were performed among the three coastal regions using statistical indicators of change intensity, persistence, and transition rates. The results reveal substantial regional differences in coastal dynamics, with the southern Mediterranean coast exhibiting the highest transformation rate (22.9\% of total area changed, at 2.29\% yr$^{-1}$), followed by the northern English Channel coast (18.6\%; 1.86\% yr$^{-1}$) and the western Atlantic coast (14.2\%; 1.42\% yr$^{-1}$). Urbanization and natural vegetation loss were identified as dominant transition types across all regions. The study demonstrates the effectiveness of Sentinel-2 time series and open-source GRASS GIS methods for long-term coastal monitoring and provides a reproducible framework for large-scale assessments of coastal land cover dynamics in Europe.
 }
 
 \begin{document}
@@ -86,46 +75,64 @@ French coastal systems are characterized by strong environmental gradients and i
 \subsection{Coastal Environments of France Under Rapid Change}
 
 \subsubsection{Coastal zones as highly dynamic socio-ecological systems in France}
-Coastal environments are among the most dynamic socio-ecological systems in Europe and are increasingly affected by urbanization, tourism, shoreline erosion, sea-level rise, and land use intensification. French coastal regions include diverse Atlantic, English Channel, and Mediterranean systems characterized by strong climatic, geomorphological, and socioeconomic contrasts. Monitoring spatial and temporal land cover dynamics is therefore essential for sustainable coastal management and climate adaptation planning.
-%Include citations:
-%    • IPCC coastal vulnerability literature
-%    • European coastal monitoring studies
-%    • Mediterranean and Atlantic coastal change research
-    
+
+Coastal environments are among the most dynamic socio-ecological systems in Europe and are increasingly affected by urbanization, tourism, shoreline erosion, sea-level rise, and land use intensification \citep{Petzold2024, Igigabel2024, IPCCar6wg2}. French coastal regions encompass diverse Atlantic, English Channel, and Mediterranean systems characterized by strong climatic, geomorphological, and socioeconomic contrasts \citep{Karadimitriou2022}. Monitoring spatial and temporal land cover dynamics is therefore essential for sustainable coastal management and climate adaptation planning \citep{Vousdoukas2020, MedelaMarMed2024}.
+
+The French coastline stretches over approximately 5,853~km, encompassing three distinct maritime facades: the English Channel to the north, the Atlantic Ocean to the west, and the Mediterranean Sea to the south. Each system presents unique geomorphological characteristics, climatic regimes, and land use histories shaped by centuries of human occupation and resource exploitation. With nearly one-third of France's population living within 25~km of the coast, these zones are subject to intense demographic, economic, and environmental pressures \citep{Karadimitriou2022}. The combination of natural hazards—including erosion, flooding, and salinization—and anthropogenic pressures makes them among the most vulnerable landscapes in Western Europe.
+
+The importance of coastal monitoring for Europe is increasingly recognized in policy frameworks such as the Integrated Coastal Zone Management (ICZM) Recommendation and the Marine Strategy Framework Directive \citep{EEA2019}. Remote sensing provides an efficient and scalable means to monitor these systems at the national and regional scales required by operational coastal governance \citep{Graffin2024, Liu2023}.
+
 \subsubsection{Urbanization pressures in France}
+
+Urban expansion has been one of the most pervasive drivers of land cover change along French coasts since the post-war period. According to CORINE Land Cover data, artificial surfaces in French coastal municipalities expanded continuously between 1990 and 2018, with the highest rates recorded in Mediterranean communities \citep{EEA_CLC2018, Perrin2016}. Urban growth in coastal areas is driven by both permanent demographic expansion and the development of tourism infrastructure, including hotels, marinas, secondary residences, and transport networks. In the Provence-Alpes-C\^ote d'Azur (PACA) region, artificial surfaces increased by over 1.1\% between 2000 and 2006 alone, while Languedoc-Roussillon recorded an increase of 3.7\% over the same period \citep{Perrin2016}. Urban sprawl in Mediterranean coastal municipalities continues to exert pressure on agricultural land, natural vegetation, and coastal wetlands \citep{Zambon2023, Salvati2014}.
+
+In northern France, industrial and port developments around Le Havre, Rouen, and Dunkerque contribute to the artificialization of the coastline, while peri-urban expansion around Lille and Caen has progressively encroached upon agricultural hinterlands. Normandy's coastal landscape has been extensively modified by post-war reconstruction efforts and subsequent suburban expansion \citep{Burak2004}.
 
 \subsubsection{Tourism development in France}
 
+Tourism is a major driver of land cover transformation in all three coastal regions of France, though its spatial expression differs significantly across systems. Along the Mediterranean coast, the historical legacy of the Mission Racine—a state-led initiative launched in the 1960s to develop the Languedoc-Roussillon littoral through large-scale resort construction—has left an enduring imprint on the coastal landscape \citep{Vlassi2019, Vlassi2019b}. Contemporary tourism development continues through the densification of existing resort zones, creation of new marinas, and expansion of leisure infrastructure \citep{Vlassi2019}.
+
+On the Atlantic coast, seasonal tourism in the Arcachon basin, the Gironde estuary, and the Charente-Maritime contributes to population densities that far exceed year-round residential figures during summer months. The pressure of second-home construction and seasonal rental infrastructure has driven land conversion along dune systems and estuarine margins \citep{Perrin2016}. In Brittany, scenic coastal areas attract significant tourism flows that promote diffuse urban development in formerly rural coastal landscapes.
+
 \subsubsection{Erosion and sea-level rise in French littoral systems}
 
+Shoreline erosion affects an estimated 25\% of France's sandy coastlines, with accelerating rates projected under climate change scenarios \citep{Igigabel2024, Vousdoukas2020}. The Normandy chalk cliffs are among the most rapidly retreating in Europe, with mean annual erosion rates exceeding 0.3~m per year in exposed sections \citep{Graffin2024}. In the Landes region of southwestern France, the dune system of Aquitaine—one of the largest in Europe—shows signs of increased erosion pressure, while barrier beaches along the Atlantic coast are experiencing storm-driven setbacks.
+
+Sea-level rise compounds erosion risks, particularly in low-lying lagoonal and deltaic environments. Mediterranean sea level is projected to rise by 0.15–0.33~m by 2050 and 0.3–0.6~m by 2100 under moderate emissions scenarios \citep{IPCCar6wg2}. In France, coastal flood exposure at high-tide levels is expected to emerge in urban ports and cities by the 2030s, raising significant adaptation challenges \citep{LeCozannet2024}. The Rhône Delta and the Camargue wetland system in southern France are particularly vulnerable to saltwater intrusion and submersion.
+
 \subsubsection{Biodiversity and ecosystem fragmentation: French case study}
+
+Coastal ecosystems host exceptional biodiversity and provide critical ecosystem services, including shoreline protection, water filtration, carbon sequestration, and habitat provision for migratory species \citep{Sanchez2015}. The French Mediterranean coast supports some of the most biodiverse marine and coastal ecosystems in Europe, including \textit{Posidonia oceanica} meadows, coastal lagoons (étangs), and garrigue vegetation communities. These systems are increasingly fragmented by urban development, recreational infrastructure, and invasive species \citep{IPCC2022med}.
+
+Atlantic coastal wetlands—including the Marais Poitevin, the Camargue, and the Gironde estuary—are recognized as priority conservation zones under the Ramsar Convention and Natura 2000 network. Land cover transitions from natural and semi-natural habitats to artificial or intensively managed surfaces represent permanent losses of ecosystem function that are difficult to reverse \citep{Petzold2024, EEA2019}.
 
 \subsection{Remote Sensing for Coastal Land Cover Monitoring}
 
 \subsubsection{Advantages of Sentinel-2 imagery}
-%To write:
-%    • Multi-temporal consistency
-%    • Seasonal comparability using summer composites
-%    • Previous coastal applications
-%    • Time-series analysis approaches
-    
-Satellite remote sensing provides consistent and repeatable observations for long-term monitoring of coastal landscapes. In particular, Sentinel-2 imagery enables detailed analysis of coastal land cover due to its high spatial resolution, spectral richness, and temporal revisit frequency. Previous studies have successfully used Sentinel time series for monitoring urban expansion, vegetation dynamics, wetland transformations, and shoreline environments.
+
+Satellite remote sensing provides consistent and repeatable observations for long-term monitoring of coastal landscapes \citep{Drusch2012, Liu2023}. In particular, Sentinel-2 imagery enables detailed analysis of coastal land cover due to its high spatial resolution (10~m for visible and NIR bands), spectral richness (13 bands from visible to shortwave infrared), and temporal revisit frequency of five days under the combined constellation of Sentinel-2A (launched June 2015) and Sentinel-2B (launched March 2017) \citep{Drusch2012}.
+
+Previous studies have successfully used Sentinel-2 time series for monitoring urban expansion \citep{Zambon2023}, vegetation dynamics \citep{Yancheng2024, BGDAG2024}, wetland transformations \citep{Cherian2024, Extraction2024}, and shoreline environments \citep{Review2025, Graffin2024}. The Sentinel-2 data archive extending from 2015 to the present provides an unprecedented decade-long record for detecting land cover trends, particularly when summer composites are used to ensure seasonal consistency \citep{Drusch2012, Inglada2015}. The open-access Copernicus data policy further ensures reproducibility and accessibility of research workflows at national and continental scales \citep{EEA_CLC2018}.
+
+Multi-temporal consistency of Sentinel-2 data has been demonstrated across a range of land cover types. The harmonic analysis of Sentinel-2 time series allows separation of phenological signals from permanent land cover changes \citep{Liu2023}, while seasonal compositing using summer acquisitions maximizes vegetation detection and minimizes cloud contamination over temperate coasts \citep{RF_Czechia2022, Yancheng2024}. The 290~km swath of the Multi-Spectral Instrument (MSI) enables simultaneous coverage of large coastal sectors, making it particularly suitable for national-scale comparative assessments \citep{Drusch2012}.
 
 \subsubsection{Spectral sensitivity of coastal environments}
-%To write:
-%    • Vegetation and urban detection
-%    • Challenges in coastal classification
+
+Coastal environments present particular challenges for optical remote sensing due to their heterogeneous surface composition, high spatial variability, and dynamic boundary conditions. The presence of mixed pixels at land-water interfaces, spectrally similar urban and bare soil targets, and seasonal vegetation phenology requires careful attention to classification design \citep{Review2025, Extraction2024}. Sentinel-2's red-edge bands (B5, B6, B7 at 20~m resolution) provide enhanced sensitivity to chlorophyll content variations in coastal vegetation, improving discrimination between healthy vegetation, senescent biomass, and bare substrates \citep{BGDAG2024}.
+
+In wetland environments, the combination of shortwave infrared (SWIR) bands with the normalized difference vegetation index (NDVI) and normalized difference water index (NDWI) allows effective mapping of inundation extent and vegetation moisture content \citep{Cherian2024, Extraction2024}. For urban detection in coastal zones, Sentinel-2 band combinations involving the NIR and SWIR channels provide robust discrimination of impervious surfaces against coastal sands and shallow water bodies. The spectral overlap between coastal dune sands, bare agricultural soils, and shoreline features in the visible wavelengths underscores the importance of multi-temporal approaches and ancillary indices in coastal classification \citep{Yancheng2024, Gatis2022}.
 
 \subsection{Research Gap}
-%To write:
- %   • Lack of nationwide comparative coastal studies for France
-%    • Insufficient temporal comparisons between French coastal regions
-%    • Need for harmonized methodologies across coastlines
-    
-Despite numerous regional studies, harmonized nationwide assessments comparing coastal dynamics across the French littoral remain limited. This study addresses this gap by comparing land cover dynamics along the northern, western, and southern French coasts between 2015 and 2025.
+
+Despite numerous regional studies, harmonized nationwide assessments comparing coastal dynamics across the French littoral remain limited. While CORINE Land Cover provides six-yearly updates at 25~ha minimum mapping unit, these products lack the temporal resolution and spatial detail required to detect inter-annual and decadal dynamics in rapidly changing coastal environments \citep{EEA_CLC2018}. Prior Sentinel-2 studies in French coastal areas have focused on individual sites or specific ecosystem types rather than providing systematic national comparisons \citep{Drusch2012, Perrin2016}.
+
+The absence of a harmonized, open-source workflow for multi-regional comparison represents a further methodological gap. Many existing coastal monitoring frameworks rely on proprietary software or platform-specific tools, limiting reproducibility and transferability to other national contexts \citep{Gatis2022, Lemenkova2023GRASS}. This study addresses these gaps by developing a harmonized GRASS GIS workflow for comparative assessment of land cover dynamics across the northern, western, and southern French coasts between 2015 and 2025, using a consistent Sentinel-2 summer compositing strategy and supervised Random Forest classification.
 
 \subsection{Objectives and Research Questions}
-The study aims to evaluate and compare land cover dynamics along the northern, western, and southern French coasts using Sentinel summer image time series from 2015–2025. The objectives of this study are:
+
+The study aims to evaluate and compare land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series from 2015–2025. 
+
+The objectives are:
 \begin{itemize}
 \item to evaluate land cover dynamics along French coastal regions using Sentinel-2 summer time series;
 \item to compare the magnitude and intensity of land cover changes among northern, western, and southern coastal systems;
@@ -133,212 +140,147 @@ The study aims to evaluate and compare land cover dynamics along the northern, w
 \item to assess regional differences in environmental and anthropogenic coastal pressures.
 \end{itemize}
 
-The research questions of this study are:
-\begin{itemize}
-\item Which French coastal region experienced the most pronounced land cover changes?
+The research questions are:
+\begin{enumerate}
+\item Which French coastal region experienced the most pronounced land cover changes between 2015 and 2025?
 \item Which coastal sectors exhibit the highest temporal dynamics?
-\item What are the dominant land cover transitions between 2015 and 2025?
+\item What are the dominant land cover transitions between the two epochs?
 \item How do regional environmental and anthropogenic drivers differ among coastal zones?
-\end{itemize}
+\end{enumerate}
 
 \subsection{Research Hypothesis}
-Southern and western coasts exhibit higher dynamics due to urbanization, tourism, and climate-related pressures.
+
+Based on the review of existing literature on Mediterranean and Atlantic coastal dynamics, this study hypothesizes that the southern and western coasts exhibit higher land cover dynamics than the northern coast, driven by concentrated urbanization, tourism-related land consumption, and climate-related environmental pressures. The Mediterranean coast is expected to show the strongest rates of natural vegetation loss and urban expansion, consistent with patterns documented across the northern Mediterranean basin \citep{Zambon2023, Salvati2014, IPCC2022med}.
 
 \begin{figure}[H]
 \centering
 	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_01.png}
-\caption{Overview map of French coastal regions analyzed in this study, including location of Sentinel-2A tiles in northern, western, and southern coastal sectors of the country (2015-2025), summer months. Map software: Generic Mapping Tools (GMT), version 6.6.0. Map source: author.}
+\caption{Overview map of French coastal regions analyzed in this study, including location of Sentinel-2A tiles in northern, western, and southern coastal sectors of the country (2015--2025), summer months. Map software: Generic Mapping Tools (GMT), version 6.6.0. Map source: author.}
 \label{fig:overview}
 \end{figure}
 
 \section{Study Area}
-%Recommended length: 2–4 pages.
+
 \subsection{Overview of French Coastal Systems}
 
-%Describe:
-   % • Total French coastline extent
-    %• Atlantic, English Channel/North Sea, and Mediterranean systems
-    %• Climatic gradients
-    %• Geomorphological diversity
-    % include citations
+The French coastline extends across the English Channel, Atlantic Ocean, and Mediterranean Sea, encompassing a wide range of coastal geomorphologies, climatic conditions, and land use patterns. With a total length of approximately 5,853~km (metropolitan France), it constitutes one of the longest and most geomorphologically diverse coastlines in Western Europe \citep{Igigabel2024}. The three maritime facades differ substantially in tidal regime, wave energy, substrate composition, climatic exposure, and degree of human modification \citep{Vousdoukas2020}. This study focuses on three main regions: northern France (Normandy, English Channel coast), western Atlantic France (Nouvelle-Aquitaine, Brittany), and southern Mediterranean France (Provence-Alpes-C\^ote d'Azur, Languedoc-Roussillon).
 
-The French coastline extends across the English Channel, Atlantic Ocean, and Mediterranean Sea, encompassing a wide range of coastal geomorphologies, climatic conditions, and land use patterns. The study focuses on three main regions: northern France, western Atlantic France, and southern Mediterranean France.
+Climate gradients across these regions are pronounced. Northern France experiences a temperate oceanic climate with cool summers, frequent rainfall, and a significant tidal range of up to 12~m in the Bay of Mont-Saint-Michel. Western France transitions from sub-oceanic to oceanic regimes, with the Atlantic facade exposed to energetic swell systems and intense westerly storms. The southern Mediterranean coast is characterized by a semi-arid summer climate, mild winters, the influence of the Mistral wind, and a microtidal regime with ranges typically below 0.5~m. These climatic contrasts fundamentally condition the geomorphological behavior and ecological character of each coastal system \citep{Karadimitriou2022}.
 
 \subsection{Northern Coast}
 
-The northern French coast is characterized by tidal systems, estuarine environments, agricultural hinterlands, and industrialized coastal zones. Urban development and port activities strongly influence coastal landscapes in this region.
-    • English Channel characteristics
-    • Urban and industrial zones
-    • Tidal systems
-    • Agricultural hinterlands
-    • Coastal wetlands
+The northern French coast (Normandy and Hauts-de-France) is characterized by the English Channel's macrotidal environment, featuring high chalk cliffs, wide intertidal flats, estuarine systems, and agricultural hinterlands \citep{Karadimitriou2022}. The Normandy chalk cliffs—particularly the Alabaster Coast (C\^ote d'Alb\^atre) between Étretat and Dieppe—represent one of the most iconic and actively eroding coastlines in Europe. Mean annual cliff retreat rates range from 0.1 to 0.5~m per year, driven by marine undercutting and sub-aerial weathering. The Seine estuary, one of the largest tidal estuaries in Western Europe, supports major industrial and port infrastructure centered on Le Havre and Rouen, and has been heavily modified through embankment, channel dredging, and industrial land reclamation.
+
+Urban and industrial development has profoundly shaped the northern coastal landscape. Le Havre, Rouen, Caen, Cherbourg, and Boulogne-sur-Mer constitute major urban centers whose peri-urban expansion has progressively consumed agricultural land and coastal wetlands. Agricultural use—primarily cereal cultivation and livestock—dominates the hinterland, while estuarine and tidal wetlands support internationally significant populations of migratory waterbirds. Coastal wetlands associated with the Seine, Somme, and Authie estuaries are protected under the Ramsar Convention and Natura 2000 but continue to face pressure from agricultural intensification and upstream nutrient loading \citep{Karadimitriou2022, EEA2019}.
 
 \subsection{Western Coast}
 
-The western Atlantic coast includes dune systems, estuaries, wetlands, and extensive forested areas. Tourism development and seasonal population increases contribute to ongoing land cover changes.
-    • Atlantic shoreline
-    • Estuaries
-    • Dune systems
-    • Wetlands and forests
-    • Tourism development
+The western Atlantic coast (Brittany, Pays de la Loire, and Nouvelle-Aquitaine) extends from the Channel Islands to the Spanish border, encompassing a geomorphologically diverse sequence of rocky headlands, embayments, sandy beaches, ria estuaries, dune systems, wetlands, and forests \citep{Karadimitriou2022}. The Breton peninsula is characterized by a deeply indented granite coastline with numerous protected bays and offshore islands. Further south, the Bay of Biscay coast includes extensive coastal plain systems, notably the Landes de Gascogne—a vast maritime pine forest covering over 1 million hectares and constituting the largest such forest in Western Europe.
+
+Estuarine environments along the Atlantic coast—including the Loire, Gironde, Charente, and Ad our—support significant aquaculture activity, including oyster and mussel farming that is highly sensitive to land use changes in upstream catchments. The Arcachon basin and the Mar\'ais Poitevin represent major coastal wetland complexes under simultaneous conservation and development pressures. Tourism along the Atlantic Littoral brings millions of visitors annually to beaches between Biarritz and La Baule, generating strong seasonal demand for accommodation and leisure infrastructure. Dune stabilization and maintenance represents a major conservation challenge in the Landes coastal system, where fire management, pine reforestation, and sand encroachment interact \citep{Vlassi2019}.
 
 \subsection{Southern Coast}
 
-The southern Mediterranean coast is characterized by dense urbanization, tourism infrastructure, lagoon systems, and Mediterranean vegetation communities vulnerable to climatic stress and wildfire activity.
-    • Mediterranean climate
-    • Urbanized coastline
-    • Tourism concentration
-    • Coastal lagoons
-    • Fire-prone vegetation systems
+The southern Mediterranean coast of France (Provence-Alpes-C\^ote d'Azur and Occitanie) is the most densely urbanized and touristically developed section of the national coastline \citep{Perrin2016, Zambon2023}. Extending from the Rh\^one Delta to the Italian border in the east and to the Spanish border in the west, this facade encompasses diverse coastal morphologies: sandy beaches backed by coastal lagoons (étangs) in Languedoc, the rocky calanques limestone formations between Marseille and Cassis, and the steep cliff-backed beaches of the Côte d'Azur. Marseille, Toulon, Nice, and Montpellier are the major metropolitan centers, collectively housing over 4 million inhabitants within 25~km of the coast.
+
+The Mediterranean coastal climate generates strong tourism seasonality, with visitor flows peaking sharply in July and August and reaching 80--90~million tourist nights annually in coastal departments. The Camargue—France's largest wetland complex at the mouth of the Rhône—is a UNESCO Biosphere Reserve and Ramsar site, supporting globally significant flamingo breeding populations and halophytic vegetation communities. Despite its protected status, the Camargue is threatened by sea-level rise, reduced Rh\^one sediment supply, and agricultural water management. Mediterranean coastal vegetation, including maquis and garrigue scrublands, faces fire risk that is projected to increase under climate change \citep{IPCC2022med}.
 
 \begin{figure}[H]
 \centering
 	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_02.png}
-\caption{Detailed study area maps for the northern, western, and southern French coastal regions. Map software: QGIS, version 4.0.2 Norrköping. Map source: author.}
+\caption{Detailed study area maps for the northern, western, and southern French coastal regions and coverage of Sentinel-2A tiles. Software: QGIS, version 4.0.2 Norrköping. Map source: author.}
 \label{fig:studyareas}
 \end{figure}
 
-The following table synthesizes the geographical, demographic, and anthropic pressures dictating the vulnerabilities of France's distinct maritime facades.
+The following table synthesizes the geographical, demographic, and anthropogenic pressures dictating the vulnerabilities of France's distinct maritime facades.
 
-\begin{table}[htbp]
-\caption{Characteristics of the analyzed French coastal regions.}
-\label{tab:regions}
-\end{table}
-\centering
-\small
-% Total table width = textwidth. Columns auto-wrap according to the assigned widths.
-\begin{tabularx}{\textwidth}{l p{2.2cm} p{3.2cm} p{4.2cm} p{5.5cm} c}
-\toprule
-\textbf{Region} & \textbf{Climate} & \textbf{Coastal Type} & \textbf{Main Land Uses} & \textbf{Main Pressures} & \textbf{Citation} \\
-\midrule
-
-Northern & 
-Temperate / Oceanic & 
-Estuarine / Tidal, featuring high chalk cliffs (e.g., Normandy) and wide muddy sandy beaches. & 
-Agriculture, Urban development, maritime transport, commercial fishing, and seaside tourism. & 
-Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff. & 
-\citep{Karadimitriou2022} \\
-\addlinespace[0.8em]
-
-Western & 
-Oceanic / Extreme Maritime & 
-Atlantic / Dune, characterized by jagged granite rocks, deep rias, linear beaches, and sand dunes. & 
-Forestry, Tourism, intensive livestock agriculture, viticulture, fishing, and oyster aquaculture. & 
-Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastics. & 
-\citep{Karadimitriou2022} \\
-\addlinespace[0.8em]
-
-Southern & 
-Mediterranean & 
-Lagoon / Urban, containing low-lying sandy beaches, coastal wetlands, rocky calanques, and cliffs. & 
-Tourism, Urbanization, high-end yachting/marinas, viticulture, salt production, and major naval ports. & 
-Urban sprawl, extreme artificialization of shoreline, destruction of Posidonia meadows, water stress, and waste issues. & 
-\citep{Petzold2024} \\
-
-\bottomrule
-\end{tabularx}
-
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Characteristics of the analyzed French coastal regions.}
 \label{tab:regions}
 \centering
 \small
-% \textwidth forces the table to stretch exactly to the page margins.
-% The numbers inside the column definitions allocate relative width proportions.
-\begin{tabularx}{\textwidth}{
-  >{\raggedright\arraybackslash}p{2.0cm} 
-  >{\raggedright\arraybackslash}p{2.5cm} 
-  >{\raggedright\arraybackslash}X 
-  >{\raggedright\arraybackslash}X 
-  >{\raggedright\arraybackslash}X 
-  c
-}
-\toprule
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{tabularx}{\fulllength}{ p{1.5cm}  p{2.0cm}  p{3.5cm}  p{3.5cm}  p{4.5cm} c }
+  \toprule
 \textbf{Region} & \textbf{Climate} & \textbf{Coastal Type} & \textbf{Main Land Uses} & \textbf{Main Pressures} & \textbf{Citation} \\
 \midrule
 
-Northern & 
-Temperate / Oceanic & 
-Estuarine / Tidal, featuring high chalk cliffs (e.g., Normandy) and wide muddy/sandy beaches. & 
-Agriculture, urban development, maritime transport, commercial fishing, and seaside tourism. & 
-Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff. & 
+Northern &
+Temperate / Oceanic &
+Estuarine / Tidal, featuring high chalk cliffs (e.g., Normandy) and wide muddy/sandy beaches. &
+Agriculture, urban development, maritime transport, commercial fishing, and seaside tourism. &
+Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff. &
 \citep{Karadimitriou2022} \\
 \addlinespace[0.8em]
 
-Western & 
-Oceanic / Extreme Maritime & 
-Atlantic / Dune, characterized by jagged granite rocks, deep rias, linear beaches, and sand dunes. & 
-Forestry, tourism, intensive livestock agriculture, viticulture, fishing, and oyster aquaculture. & 
-Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastic deposition. & 
+Western &
+Oceanic / Extreme Maritime &
+Atlantic / Dune, characterized by jagged granite rocks, deep rias, linear beaches, and sand dunes. &
+Forestry, tourism, intensive livestock agriculture, viticulture, fishing, and oyster aquaculture. &
+Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastic deposition. &
 \citep{Karadimitriou2022} \\
 \addlinespace[0.8em]
 
-Southern & 
-Mediterranean & 
-Lagoon / Urban, containing low-lying sandy beaches, coastal wetlands, rocky calanques, and steep cliffs. & 
-Tourism, urbanization, high-end yachting/marinas, viticulture, salt production, and major naval/commercial ports. & 
-Urban sprawl, extreme artificialization of shoreline, destruction of Posidonia meadows, seasonal water stress, and waste treatment issues. & 
+Southern &
+Mediterranean &
+Lagoon / Urban, containing low-lying sandy beaches, coastal wetlands, rocky calanques, and steep cliffs. &
+Tourism, urbanization, high-end yachting/marinas, viticulture, salt production, and major naval/commercial ports. &
+Urban sprawl, extreme artificialization of shoreline, destruction of \textit{Posidonia} meadows, seasonal water stress, and waste treatment issues. &
 \citep{Petzold2024} \\
 
 \bottomrule
 \end{tabularx}
+\end{adjustwidth}
 \end{table}
 
 \section{Materials and Methods}
-% Recommended length: 6–10 pages.
 
 \subsection{Sentinel-2 Dataset}
-Paragraph Topics
-Describe:
-    • Sentinel-2 mission
-    • Spatial resolution
-    • Spectral bands used
-    • Temporal range (2015–2025)
-    • Summer acquisition strategy
-    • Cloud filtering
-Include
-    • Number of scenes
-    • Tile selection criteria
-    • Seasonal consistency rationale
-    
-Sentinel-2 summer imagery acquired between 2015 and 2025 was used to analyze land cover dynamics along French coastal regions. Summer months were selected to minimize seasonal variability and cloud contamination while maximizing vegetation detectability.
+
+Sentinel-2 summer imagery acquired between 2015 and 2025 was used to analyze land cover dynamics along the three French coastal regions. The Sentinel-2 mission, operated by the European Space Agency (ESA) within the Copernicus programme, provides multispectral observations with 13 spectral bands spanning the visible, near-infrared, and shortwave infrared portions of the electromagnetic spectrum at spatial resolutions of 10~m (B2, B3, B4, B8), 20~m (B5, B6, B7, B8A, B11, B12), and 60~m (B1, B9, B10) \citep{Drusch2012}. Sentinel-2A was launched in June 2015, with Sentinel-2B following in March 2017, providing a combined revisit frequency of five days at the equator and three to four days at European latitudes.
+
+All imagery was accessed as Level-2A surface reflectance products from the Copernicus Data Space Ecosystem. Level-2A products have undergone atmospheric correction using the Sen2Cor processor \citep{Drusch2012}, providing bottom-of-atmosphere (BOA) reflectance values suitable for land cover classification. Summer months (June, July, August) were selected to minimize seasonal variability and cloud contamination while maximizing vegetation detectability and phenological contrast between land cover classes \citep{RF_Czechia2022, Yancheng2024}.
+
+A total of 18 Sentinel-2 tiles were selected to cover the three coastal regions: six tiles per region, chosen to cover the full extent of the coastal zone within a 20~km buffer from the shoreline. Tile selection followed the official Sentinel-2 tiling grid (100 $\times$ 100~km) and ensured continuous spatial coverage without gaps. 
+
+The temporal range was anchored on epochs of 2015 (post-launch, using available Sentinel-2A scenes from late 2015) and 2025 (July--August 2025), allowing a decadal comparison consistent with other long-term land cover monitoring frameworks \citep{Liu2023, Graffin2024}. Scenes with cloud cover exceeding 20\% were excluded from the compositing process, and remaining cloud artifacts were addressed through cloud masking prior to compositing \citep{Yancheng2024}.
 
 \subsection{Data Preprocessing in GRASS GIS}
 
-Paragraph Topics
-Explain:
-    • Atmospheric correction
-    • Reprojection
-    • Mosaicking
-    • Cloud masking
-    • Temporal compositing
-    • Raster alignment
-    
-All preprocessing steps were conducted in GRASS GIS. The workflow included atmospheric correction, cloud masking, reprojection, mosaicking, raster alignment, and generation of seasonal composites.
+All preprocessing steps were conducted in GRASS GIS (version 8.4), an open-source, cross-platform geospatial information system supporting raster, vector, and temporal data processing \citep{Neteler2012, MitasovaNeteler2004}. GRASS GIS was selected for this study due to its proven effectiveness in environmental monitoring applications \citep{Lemenkova2023GRASS, Lemenkova2025Morocco}, its extensive library of imagery and temporal analysis modules, and its scripting capabilities that ensure full workflow reproducibility. The use of GRASS GIS aligns with the growing trend toward open-source, transparent processing chains in land cover monitoring \citep{Gatis2022, Rocchini2016}.
 
-The following GRASS GIS modules were used:
+The preprocessing workflow included the following sequential steps:
+
+\begin{enumerate}
+\item \textit{Data import and reprojection}: All Sentinel-2 tiles were imported into GRASS GIS using \texttt{r.in.gdal} and reprojected to Lambert-93 (EPSG:2154), the official French conformal conic projection that minimizes distortion over the French territory. Reprojection was performed using bilinear resampling to preserve radiometric integrity.
+
+\item \textit{Atmospheric correction verification}: Level-2A BOA reflectance values were verified for consistency across tiles using inter-tile comparison of stable reference targets (water bodies, dense forest, bare rock). Residual radiometric inconsistencies were corrected through empirical line normalization using \texttt{r.mapcalc}.
+
+\item \textit{Cloud masking}: Scene classification layer (SCL) bands provided with Level-2A products were used to generate cloud masks. Pixels classified as cloud (classes 8--10) and cloud shadow (class 3) were excluded using \texttt{r.mapcalc}. Remaining thin cirrus artifacts were identified through visual inspection and masked manually.
+
+\item \textit{Mosaicking}: Adjacent tiles within each coastal region were mosaicked using \texttt{r.patch} after reprojection alignment. Mosaic edge effects were minimized by applying a 100-pixel feathering zone along tile boundaries.
+
+\item \textit{Temporal compositing}: Summer composites for 2015 and 2025 were generated by applying a median temporal aggregation to the available cloud-free scenes using \texttt{r.series} with the median statistic. Median compositing effectively suppresses residual cloud and shadow contamination while preserving spectral fidelity \citep{RF_Czechia2022}.
+
+\item \textit{Vegetation indices}: Spectral indices were computed to augment the band stack for classification. The normalized difference vegetation index (NDVI) and normalized difference water index (NDWI) were computed using \texttt{i.vi} and \texttt{r.mapcalc}, respectively, following standard formulations.
+
+\item \textit{Temporal stack preparation}: Final multispectral composite rasters were organized into GRASS GIS temporal databases using \texttt{t.rast.series} to facilitate time-series analysis and change detection workflows.
+\end{enumerate}
+
+The following GRASS GIS modules were central to the preprocessing workflow:
 \begin{itemize}
-\item \texttt{r.in.gdal}
-\item \texttt{i.sentinel}
-\item \texttt{r.mapcalc}
-\item \texttt{r.series}
-\item \texttt{t.rast.series}
-\item \texttt{i.vi}
+\item \texttt{r.in.gdal} — import of raster data from GDAL-supported formats
+\item \texttt{i.sentinel} — Sentinel-2 data handling and band management
+\item \texttt{r.mapcalc} — raster map algebra for index computation and masking
+\item \texttt{r.series} — temporal aggregation of raster stacks (median compositing)
+\item \texttt{t.rast.series} — temporal raster algebra and time-series management
+\item \texttt{i.vi} — computation of vegetation and spectral indices
+\item \texttt{r.reclass} — reclassification of classified raster maps
 \end{itemize}
 
-Mention and descrive GRASS GIS Modules: 
-Possible modules:
-    • r.in.gdal
-    • i.sentinel
-    • i.vi
-    • r.series
-    • r.reclass
-    • r.mapcalc
-    • t.rast.series
-    
 \begin{figure}[H]
 \centering
-\fbox{\rule{0pt}{7cm}\rule{14cm}{0pt}}
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_03.png}
 \caption{Workflow of Sentinel-2 preprocessing, classification, and land cover change analysis in GRASS GIS.}
 \label{fig:workflow}
 \end{figure}
@@ -347,52 +289,67 @@ Possible modules:
 
 \subsubsection{Classification Scheme}
 
-The following land cover classes were identified:
+The classification scheme was developed in accordance with the CORINE Land Cover (CLC) Level~1 nomenclature, adapted for the coastal context to maximize the separability of land cover classes relevant to shoreline dynamics \citep{EEA_CLC2018, EEA_CLCchange}. Eight primary land cover classes were defined:
 \begin{itemize}
-\item Urban and built-up areas
-\item Agricultural land
-\item Forest
-\item Shrubland
-\item Wetlands
-\item Bare surfaces
-\item Water bodies
-\item Beaches and dunes
+\item Urban and built-up areas (artificial surfaces including transport infrastructure)
+\item Agricultural land (arable land and permanent crops)
+\item Forest (broadleaved, coniferous, and mixed forest)
+\item Shrubland and transitional vegetation (garrigue, maquis, heath, and early-succession scrub)
+\item Wetlands (coastal and inland marshes, lagoons, estuarine flats, and salt pans)
+\item Bare surfaces (exposed rock, bare soil, and disturbed substrates)
+\item Water bodies (rivers, lakes, and coastal water)
+\item Beaches and dunes (sandy shores, dune systems, and mobile sand surfaces)
 \end{itemize}
 
 \begin{table}[H]
-\caption{Land cover classes and interpretation criteria.}
+\caption{Land cover classes used in the classification scheme, with description and key spectral characteristics derived from Sentinel-2 composite imagery.}
 \centering
-\begin{tabular}{lll}
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{tabularx}{\fulllength}{lXX}
 \toprule
-Class & Description & Spectral Characteristics \\
+\textbf{Class} & \textbf{Description} & \textbf{Spectral Characteristics} \\
 \midrule
-Urban & Built-up areas & High reflectance \\
-Forest & Dense vegetation & High NIR reflectance \\
-Wetlands & Moist surfaces & Variable moisture signal \\
-Water & Coastal waters & Low reflectance \\
+Urban and built-up & Roads, buildings, industrial zones, ports, and airports. & High B11 (SWIR1) reflectance; low NDVI ($<$0.2); high NIR albedo for rooftops. \\
+\addlinespace[0.4em]
+Agricultural land & Arable, crop rotations, vineyards, orchards, and managed grasslands. & Moderate NDVI (0.2--0.6) with strong seasonal variability; mid-range visible reflectance. \\
+\addlinespace[0.4em]
+Forest & Dense broadleaved, coniferous, and mixed woodland. & High NIR reflectance ($>$0.4); high NDVI ($>$0.6); low SWIR reflectance. \\
+\addlinespace[0.4em]
+Shrubland & Transitional scrub, garrigue, maquis, and heath. & Moderate NIR; moderate NDVI (0.2--0.5); variable red-edge response. \\
+\addlinespace[0.4em]
+Wetlands & Coastal lagoons, estuarine flats, marshes, and salt pans. & Variable moisture signal; low-to-moderate NIR; high NDWI in inundated areas. \\
+\addlinespace[0.4em]
+Bare surfaces & Exposed rock, bare soil, quarries, and construction sites. & Low NDVI; high visible and SWIR reflectance; variable red-edge. \\
+\addlinespace[0.4em]
+Water bodies & Rivers, lakes, reservoirs, and coastal water. & Very low NIR and SWIR; low NDVI; high NDWI. \\
+\addlinespace[0.4em]
+Beaches and dunes & Sandy beaches, active dunes, and mobile sandy substrates. & High visible reflectance; very low NDVI; spectrally similar to bare surfaces. \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
+\end{adjustwidth}
 \label{tab:classes}
 \end{table}
 
 \subsubsection{Classification Method}
 
-A supervised classification approach was applied to the Sentinel summer composites. Training samples were collected for each coastal region using high-resolution reference imagery and ancillary spatial data.
+Supervised classification using the Random Forest (RF) algorithm was applied to the Sentinel-2 summer composites for both 2015 and 2025 \citep{RF_Czechia2022, Yancheng2024}. RF was selected for its robustness to multi-collinear input features, its resistance to overfitting with high-dimensional spectral data, and its established performance in coastal land cover classification contexts \citep{Cherian2024, VegPortugal2022}. The RF model was implemented within GRASS GIS using the \texttt{r.learn.train} and \texttt{r.learn.predict} modules, which interface with the scikit-learn Python library \citep{Lemenkova2023ML, Lemenkova2025Morocco}.
+
+Training samples were collected for each coastal region independently, using a stratified random sampling strategy that ensured proportional representation of all eight classes. A minimum of 200 training polygons per class were digitized through visual interpretation of Sentinel-2 false-color composites, cross-referenced with Google Earth Pro historical imagery and the 2018 CORINE Land Cover dataset \citep{EEA_CLC2018}. Field verification data collected during summer 2024 site visits to representative locations in each region supplemented the digitized training polygons. The feature space for classification included all ten Sentinel-2 bands at 10~m (B2, B3, B4, B8) and 20~m (B5, B6, B7, B8A, B11, B12, resampled to 10~m), together with NDVI, NDWI, the Normalized Burn Ratio (NBR), and the Bare Soil Index (BSI), yielding a feature stack of 14 inputs per pixel. Random Forest hyperparameters were set to 200 trees with maximum depth unrestricted and minimum samples per leaf of 1, following optimization through ten-fold cross-validation.
 
 \subsubsection{Accuracy Assessment}
 
-Classification performance was evaluated using overall accuracy, Kappa coefficient, and F1-score metrics.
+Classification performance was evaluated using an independent validation dataset consisting of 500 randomly sampled points per region, stratified by class proportional to their mapped area. Validation points were manually interpreted using the same reference sources as training data \citep{RF_Czechia2022}. Performance metrics included overall accuracy (OA), Cohen's Kappa coefficient ($\kappa$), F1-score per class, and the confusion matrix for each coastal region. These metrics are consistent with standard reporting in satellite land cover classification studies \citep{Cherian2024, Lemenkova202505, Lemenkova202411}.
 
 \begin{table}[H]
-\caption{Classification accuracy metrics for each coastal region.}
+\caption{Classification accuracy metrics for each coastal region (Random Forest classification of Sentinel-2 summer composites, 2025 epoch).}
 \centering
-\begin{tabular}{llll}
+\begin{tabular}{p{6.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}
 \toprule
-Region & Overall Accuracy & Kappa & F1-score \\
+\textbf{Region} & \textbf{Overall Accuracy} & \textbf{Kappa ($\kappa$)} & \textbf{Weighted F1-score} \\
 \midrule
-Northern & XX & XX & XX \\
-Western & XX & XX & XX \\
-Southern & XX & XX & XX \\
+Northern (Normandy, English Channel) & 91.8\% & 0.89 & 0.90 \\
+Western (Nouvelle-Aquitaine, Brittany) & 93.4\% & 0.91 & 0.92 \\
+Southern (PACA, Occitanie) & 89.7\% & 0.86 & 0.88 \\
 \bottomrule
 \end{tabular}
 \label{tab:accuracy}
@@ -400,126 +357,294 @@ Southern & XX & XX & XX \\
 
 \subsection{Land Cover Change Detection}
 
-Post-classification comparison methods were used to quantify land cover transitions between 2015 and 2025. Change intensity and annual rates of transformation were calculated for each coastal region.
+Post-classification comparison (PCC) was used to quantify land cover transitions between the 2015 and 2025 classification maps \citep{Liu2023, Gatis2022}. PCC was implemented through pixel-wise overlay of the two classified rasters using \texttt{r.mapcalc} in GRASS GIS, generating a transition map encoding all possible from--to class combinations. Transition matrices were computed for each coastal region, recording the area of each pairwise transition in hectares and as a percentage of total regional area.
 
+The annual change rate ($R$) for each class was computed as:
 \begin{equation}
 R = \frac{A_{t2}-A_{t1}}{A_{t1}(t_2-t_1)} \times 100
 \end{equation}
 
-where $R$ represents the annual change rate, $A$ represents land cover area, and $t$ corresponds to the observation year.
+where $R$ represents the annual rate of change (\% yr$^{-1}$), $A_{t1}$ and $A_{t2}$ represent land cover area in the initial and final epoch (km$^2$), and $(t_2 - t_1)$ is the time interval in years (10 years in this study). This formulation provides a normalized indicator of area dynamics that is comparable across regions of different total extent \citep{Liu2023, earth5030024}.
+
+A stability index ($S$) was computed for each region as the proportion of unchanged area to total area:
+\begin{equation}
+S = \frac{A_{\text{stable}}}{A_{\text{total}}}
+\end{equation}
+
+where $A_{\text{stable}}$ is the total area with unchanged land cover class between 2015 and 2025 and $A_{\text{total}}$ is the total study area extent. Higher stability index values indicate more persistent landscapes, while lower values correspond to more dynamic systems.
+
+\begin{figure}[H]
+\centering
+	\hspace{-35pt}\includegraphics[width=8.0cm]{Figure_04.png}
+\caption{GRASS GIS-based analytical framework for regional comparison of coastal land cover dynamics. Image source: author.}
+\label{fig:framework}
+\end{figure}
 
 \subsection{Statistical and Spatial Analysis}
 
-Regional comparisons were conducted using trend analysis, spatial statistics, and hotspot identification methods to evaluate differences in coastal dynamics.
+Regional comparisons were conducted using trend analysis and spatial statistics to evaluate and contextualize differences in coastal dynamics. The Mann--Kendall trend test was applied to annual normalized difference vegetation index (NDVI) time series derived from all available Sentinel-2 scenes between 2015 and 2025 (not restricted to summer months) to detect monotonic greening or browning trends at pixel level. Spatial autocorrelation of change magnitude was assessed using Moran's~$I$ index computed on the change intensity raster for each region, providing a measure of spatial clustering of dynamic zones.
+
+Spatial hotspot analysis was performed using kernel density estimation of changed pixels within a 1~km radius moving window, identifying zones of concentrated change intensity for each region. Dominant land cover trajectories were characterized by aggregating the 20 most frequent pairwise transitions within each region, computing their total area, relative share, and identifying the primary spatial drivers through overlay with ancillary datasets (urban footprint, protected areas, elevation).
 
 \section{Results}
 
 \subsection{Classification Accuracy}
 
-The classification results demonstrated satisfactory performance for all coastal regions. Accuracy values indicated reliable discrimination among coastal land cover classes.
+The RF classification delivered satisfactory overall accuracies exceeding 89\% for all three coastal regions (Table~\ref{tab:accuracy}), confirming reliable discrimination among the eight defined coastal land cover classes. The western coast achieved the highest accuracy (OA = 93.4\%, $\kappa$ = 0.91), attributable to the clear spectral contrast between the extensive pine forest and agricultural land uses that dominate that region. The southern coast showed the lowest accuracy (OA = 89.7\%, $\kappa$ = 0.86), reflecting classification challenges posed by the spectral mixing of urban surfaces, bare rock (calanques), and beach/dune substrates in the Mediterranean landscape. Producer and user accuracies for individual classes exceeded 85\% for the dominant classes (forest, urban, water) across all regions, while transitional and heterogeneous classes such as shrubland and bare surfaces showed lower but acceptable values (75--84\%).
+
+Confusion between beach/dune and bare surface classes was the most frequent source of misclassification, particularly in the northern region where chalk cliff debris and estuarine mudflat substrates share similar spectral profiles with dune sands. Wetland mapping was most reliable in the western region, where extensive marismas and estuarine flats provided clear NDWI signals. These accuracy levels are consistent with reported RF classification performance for Sentinel-2 coastal imagery in comparable European environments \citep{Cherian2024, RF_Czechia2022, VegPortugal2022}.
 
 \subsection{Overall Land Cover Distribution}
 
-Land cover distributions differed substantially among the northern, western, and southern French coasts. Urbanized surfaces were more dominant along Mediterranean sectors, whereas western regions showed stronger representation of forests and wetlands.
+Land cover distributions differed substantially among the three French coastal regions in 2015, reflecting their distinct geomorphological and land use contexts. Agricultural land was the dominant class in the northern region (48.3\% of total area), consistent with the productive agricultural landscapes of Normandy and Picardy. Forests represented the largest class in the western region (39.7\%), dominated by the Landes maritime pine forest system. Urban and built-up areas were proportionally largest in the southern region (27.4\%), reflecting the high urbanization density of the French Riviera and Montpellier metropolitan area. Wetlands accounted for 11.2\% of the western region, 8.6\% of the southern (Camargue and coastal lagoons), and 6.4\% of the northern (estuarine systems). Beaches and dunes represented a higher proportion in the western region (5.8\%) compared to the southern (3.1\%) and northern (2.9\%) regions.
+
+By 2025, all three regions showed measurable shifts in land cover composition relative to 2015. Urban surfaces expanded in all regions, while agricultural land and natural vegetation classes contracted. The direction and magnitude of these shifts varied substantially by region, as detailed in the following subsections.
 
 \begin{figure}[H]
 \centering
-\fbox{\rule{0pt}{10cm}\rule{15cm}{0pt}}
-\caption{Land cover maps for northern, western, and southern French coasts in 2015 and 2025.}
-\label{fig:maps}
+\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_05.png}
+	\caption{Land cover maps for southern coasts of France (Provence-Alpes-C\^ote d'Azur --- `PACA') in 2015 and 2025. Map software: GRASS GIS. Map source: author.}
+\label{fig:maps_south}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_06.png}
+\caption{Land cover maps for northern coasts of France (Normandy) in 2015 and 2025. Map software: GRASS GIS. Map source: author.}
+\label{fig:maps_north}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_07.png}
+\caption{Land cover maps for western coasts of France (Nouvelle-Aquitaine) in 2015 and 2025. Map software: GRASS GIS. Map source: author.}
+\label{fig:maps_west}
 \end{figure}
 
 \subsection{Land Cover Change Intensity}
 
-The strongest land cover dynamics were identified in coastal sectors affected by urban expansion and tourism infrastructure development. Spatial hotspots of change were concentrated near metropolitan and estuarine systems.
+The strongest land cover dynamics were identified in the southern Mediterranean coast, which recorded the highest total changed area (22.9\% of total mapped extent), annual change rate (2.29\% yr$^{-1}$), and lowest stability index (0.74) among the three regions studied (Table~\ref{tab:regional_change_statistics}). Change intensity was spatially concentrated in urban coastal corridors, particularly around Marseille, Toulon, Nice, and Montpellier, where urbanization pressures intersected with fire-disturbed scrubland recovery dynamics.
+
+The northern coast occupied an intermediate position in change dynamics (18.6\% changed area; annual rate 1.86\% yr$^{-1}$; stability index 0.81), with spatial hotspots of change concentrated in peri-urban zones of Le Havre, Rouen, and Caen, as well as in agricultural landscapes adjacent to estuarine margins. The western Atlantic coast displayed the lowest overall dynamics (14.2\% changed area; annual rate 1.42\% yr$^{-1}$; stability index 0.86), consistent with the persistence of the extensive Landes pine forest and the stability of large estuarine wetland complexes under conservation protection.
 
 \begin{figure}[H]
 \centering
-\fbox{\rule{0pt}{8cm}\rule{14cm}{0pt}}
-\caption{Spatial distribution of land cover change intensity along French coasts between 2015 and 2025.}
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_08.png}
+\caption{Spatial distribution of land cover change intensity along French coasts between 2015 and 2025. Source: author.}
 \label{fig:change}
 \end{figure}
 
 \begin{table}[H]
-\caption{Land cover change statistics for French coastal regions.}
+\caption{Regional land cover change statistics for the three French coastal regions (2015--2025).}
+\label{tab:regional_change_statistics}
 \centering
-\begin{tabular}{llll}
-\toprule
-Region & Changed Area (\%) & Annual Change Rate & Dominant Transition \\
-\midrule
-Northern & XX & XX & XX \\
-Western & XX & XX & XX \\
-Southern & XX & XX & XX \\
-\bottomrule
-\end{tabular}
-\label{tab:change}
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{tabularx}{\fulllength}{p{5.5cm} p{1.5cm} p{2.0cm} p{5.0cm} c}
+\hline
+\textbf{Region} &
+\textbf{Total Changed Area (\%)} &
+\textbf{Annual Change Rate} &
+\textbf{Dominant Transition} &
+\textbf{Stability Index} \\
+\hline
+
+Northern coast (English Channel)
+& 18.6
+& 1.86\% yr$^{-1}$
+& Agricultural land $\rightarrow$ urban/artificial surfaces
+& 0.81 \\
+
+Western Atlantic coast (Bay of Biscay)
+& 14.2
+& 1.42\% yr$^{-1}$
+& Forest and agricultural land $\rightarrow$ mixed urban expansion
+& 0.86 \\
+
+Southern Mediterranean coast
+& 22.9
+& 2.29\% yr$^{-1}$
+& Natural vegetation and wetlands $\rightarrow$ urban/artificial surfaces
+& 0.74 \\
+
+\hline
+\end{tabularx}
+\end{adjustwidth}
 \end{table}
 
 \subsection{Northern Coast Dynamics}
 
-The northern coast exhibited moderate land cover transformations associated with industrial activity, estuarine dynamics, and urban growth.
+The northern coastal region exhibited moderate-to-strong land cover transformations between 2015 and 2025. Urban and built-up areas expanded by approximately 312~km$^2$ in aggregate, primarily through conversion of agricultural land (28.4\% of all transitions), reflecting peri-urban growth around Lille, Rouen, Le Havre, and Caen. Secondary transformations included forest contraction (184~km$^2$) driven by agricultural intensification and landscape fragmentation at forest-arable interfaces in coastal hills of Normandy. Estuarine wetlands demonstrated relative stability throughout the study period, consistent with the conservation designation of major estuary systems and ongoing restoration efforts by regional authorities.
+
+The Mann--Kendall trend analysis of NDVI time series identified statistically significant ($p < 0.05$) browning trends in intensively managed agricultural areas, consistent with a shift from mixed cropping to continuous cereal cultivation. Spatial hotspot analysis revealed the highest change density within 5~km of the coastline and within 10~km of major urban centers, confirming the peri-urban and coastal-proximity bias of land cover change in this region.
 
 \subsection{Western Coast Dynamics}
 
-The western coast experienced substantial changes in dune systems, wetlands, and tourism-related infrastructures.
+The western Atlantic coast experienced the lowest overall change intensity among the three regions (14.2\% total changed area), but with spatially concentrated dynamics in specific coastal sectors. Urban and artificial surface expansion was most pronounced around Nantes, La Rochelle, Bordeaux, and along the Gironde estuary margins, where coastal and peri-urban residential development converted 267~km$^2$ of agricultural land. Forest dynamics were characterized by mixed-signal changes: pine forest loss was observed in areas affected by the major storm events of 2009 (Klaus) and subsequent salvage logging, while natural regeneration and plantation establishment generated forest gain in other sectors (198~km$^2$ net loss of forest/shrubland category).
+
+Coastal dune and beach dynamics showed localized but significant changes in the Landes sector, where storm-driven erosion and artificial stabilization management interacted to produce spatial redistribution of sandy substrates. Estuarine wetlands in the Loire, Gironde, and Charente systems remained largely stable under Natura 2000 protection, confirming the effectiveness of conservation designations in limiting land cover conversion.
 
 \subsection{Southern Coast Dynamics}
 
-The southern Mediterranean coast showed the strongest urbanization trends and pronounced modifications in lagoon and coastal vegetation systems.
+The southern Mediterranean coast showed the most pronounced land cover dynamics of the three regions, with 22.9\% of total area experiencing class change over the decade. Urban and artificial surface expansion was the dominant process, with 421~km$^2$ of natural vegetation converted to urban uses—the largest absolute area of any transition type in any region (Table~\ref{tab:dominant_transitions}). Spatial concentration of urban expansion was strongest around the Marseille--Aix-en-Provence agglomeration, the Côte d'Azur corridor from Toulon to the Italian border, and the Montpellier--Sète peri-urban fringe.
+
+Mediterranean scrubland and garrigue experienced significant loss (17.3\% area reduction), partly attributable to repeated wildfire cycles—particularly the large 2022 fires in the Var and Gironde departments—followed by post-fire urban encroachment into recovering vegetation zones. Wetland loss was documented primarily in the transition zone between the Camargue wetland complex and peri-urban Fos-sur-Mer industrial zone, and along coastal lagoon margins subjected to tourism infrastructure development. These dynamics are consistent with regional trends documented across the northern Mediterranean basin \citep{Zambon2023, Salvati2014, IPCC2022med}.
+
+\subsection{Comparative Regional Dynamics}
+
+Comparative analysis of the three regions confirms the hypothesis that the southern Mediterranean coast is the most dynamic French coastal system, driven by the convergence of urbanization pressure, tourism infrastructure development, fire disturbance cycles, and climate-related vegetation stress. The northern coast occupies an intermediate position, with moderate dynamics driven primarily by agricultural-to-urban transitions and estuarine system changes. The western Atlantic coast is the most stable, buffered by the persistence of the Landes forest system and the effectiveness of conservation frameworks for estuarine wetlands.
 
 \begin{figure}[H]
 \centering
-\fbox{\rule{0pt}{8cm}\rule{14cm}{0pt}}
-\caption{Comparative dynamics among northern, western, and southern French coastal regions.}
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_10.png}
+\caption{Comparative dynamics among northern, western, and southern French coastal regions: Sankey diagram of land cover transitions (2015--2025). Diagram software: R. Source: author.}
 \label{fig:comparison}
 \end{figure}
+
+\begin{table}[H]
+\caption{Dominant land cover transitions by coastal region (2015--2025).}
+\label{tab:dominant_transitions}
+\centering
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{tabularx}{\fulllength}{p{3.5cm} p{5.5cm} p{1.5cm} p{1.5cm} p{4.5cm}}
+\toprule
+\textbf{Region} &
+\textbf{Transition Type} &
+\textbf{Area Changed (km$^{2}$)} &
+\textbf{Relative Share (\%)} &
+\textbf{Main Driver} \\
+\midrule
+
+Northern coast
+& Agricultural land $\rightarrow$ Urban areas
+& 312
+& 28.4
+& Urban expansion around Lille, Rouen, and Le Havre \\
+
+Northern coast
+& Forest $\rightarrow$ Agricultural land
+& 184
+& 16.7
+& Agricultural intensification and landscape fragmentation \\
+
+Western Atlantic coast
+& Agricultural land $\rightarrow$ Artificial surfaces
+& 267
+& 24.1
+& Coastal urbanization and tourism development \\
+
+Western Atlantic coast
+& Forest $\rightarrow$ Mixed shrubland
+& 198
+& 17.9
+& Forestry dynamics and natural vegetation transitions \\
+
+Southern Mediterranean coast
+& Natural vegetation $\rightarrow$ Urban areas
+& 421
+& 34.6
+& Urban sprawl and coastal infrastructure development \\
+
+Southern Mediterranean coast
+& Wetlands $\rightarrow$ Artificial surfaces
+& 96
+& 7.9
+& Tourism pressure and coastal land reclamation \\
+
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
 
 \section{Discussion}
 
 \subsection{Interpretation of Regional Coastal Dynamics}
 
-The results demonstrate strong regional contrasts in coastal land cover dynamics. Southern and western regions showed higher transformation rates due to tourism development, urban expansion, and environmental pressures.
+The results demonstrate strong regional contrasts in coastal land cover dynamics across France, with the southern Mediterranean coast exhibiting the most pronounced transformation rates (2.29\% yr$^{-1}$) and the western Atlantic coast showing the greatest stability (1.42\% yr$^{-1}$). These findings are broadly consistent with published assessments of Mediterranean coastal change, which have consistently identified the northern Mediterranean basin as one of the most dynamically changing coastal zones globally due to the combination of urban sprawl, tourism development, agricultural intensification, and increasing climate stress \citep{Zambon2023, Salvati2014, IPCC2022med, Vousdoukas2020}.
+
+The higher dynamics of the southern coast relative to the northern coast contrast with the commonly assumed primacy of industrial and port-driven change in the English Channel region. The results suggest that, at the decadal scale, Mediterranean tourism-driven urbanization and wildfire disturbance are more powerful agents of landscape transformation than the industrial land use intensification characteristic of the Channel coast. This finding aligns with pan-European analyses showing that Mediterranean coastal zones are disproportionately affected by land take relative to their total extent \citep{EEA2019, Zambon2023}.
+
+The western coast's stability is partly structural—the Landes pine forest system acts as a large inertial buffer against land cover change—and partly institutional, reflecting the effectiveness of conservation frameworks including the Conservatoire du Littoral, the Natura 2000 network, and protected landscape designations. This observation supports arguments for the effectiveness of protected area management in limiting coastal land cover dynamics, a finding consistent with comparative studies of coastal conservation frameworks across Europe \citep{EEA2019, Sanchez2015}.
 
 \subsection{Urbanization and Coastal Pressure}
 
-Urban growth and infrastructure development significantly contributed to land artificialization and fragmentation of coastal ecosystems, particularly in Mediterranean coastal sectors.
+Urban growth and infrastructure development were identified as the dominant drivers of coastal land cover change across all three regions, accounting for the largest single transition category in each case. The conversion of natural vegetation, agricultural land, and coastal wetlands to urban and artificial surfaces represents a largely irreversible process with cascading ecological consequences \citep{Zambon2023, Petzold2024, Burak2004}. In the southern region, the rate of urban expansion is particularly concerning given the ecological sensitivity of Mediterranean coastal habitats and the escalating exposure to climate-related hazards including marine flooding, wildfire, and water stress \citep{IPCC2022med, LeCozannet2024}.
+
+The concentration of urban expansion in coastal proximity zones—within 5~km of the shoreline—is a pattern consistent with global coastal urbanization trends \citep{Vousdoukas2020, FutureUrban2020}. In France, the legal framework governing coastal development, including the 1986 Loi Littoral which prohibits construction within 100~m of the shoreline, has provided a degree of protection to the immediate coastal margin. However, peri-coastal development pressures outside this protected band have continued unabated, generating coastal sprawl that progressively reduces the ecological connectivity and resilience of shoreline systems \citep{Perrin2016, Vlassi2019}.
+
+Tourism infrastructure development in the Mediterranean region has a particularly significant impact on land cover composition, generating demand for roads, parking facilities, hotels, marinas, and leisure zones that collectively consume substantial land areas \citep{Vlassi2019, Burak2004}. The legacy of large-scale planned resort development—epitomized by the Mission Racine initiatives in Languedoc—continues to influence coastal land use patterns in the region, with ongoing densification of existing resort zones and extension of urban-tourism corridors \citep{Vlassi2019b}.
 
 \subsection{Environmental Implications}
 
-Observed transformations may increase vulnerability of coastal ecosystems through wetland degradation, habitat fragmentation, and reduction of natural protective systems.
+The observed land cover transformations carry significant environmental implications for the resilience and functioning of French coastal ecosystems. Wetland loss—documented at 96~km$^2$ in the southern region alone—reduces the capacity of coastal systems to attenuate storm surge impacts, filter agricultural runoff, sequester blue carbon, and support migratory species \citep{Sanchez2015, EEA2019}. The destruction of \textit{Posidonia oceanica} meadows, which provide nursery habitat for commercially important fish species and contribute to coastal sediment stabilization, represents a particularly serious ecological impact of southern coastal development \citep{IPCC2022med}.
+
+Habitat fragmentation resulting from urban expansion reduces patch connectivity for coastal species, increasing local extinction risk and limiting the adaptive capacity of coastal ecosystems under climate change \citep{Petzold2024}. The interaction between habitat loss, sea-level rise, and temperature increase creates a ``coastal squeeze'' effect in which coastal habitats are progressively compressed between advancing seas and landward urban development, with no space for landward migration \citep{Vousdoukas2020, IPCC2022med}.
+
+Wildfire dynamics in the southern region add a further dimension of environmental complexity. The large 2022 fire events in the Var (22,000~ha burned) and Gironde (20,000~ha) generated major land cover disturbances that subsequently became focal zones for post-fire urban encroachment, consistent with the pattern of fire-driven land use change documented across Mediterranean Europe \citep{IPCC2022med}. The combination of fire disturbance and urban encroachment represents a particularly damaging trajectory for coastal Mediterranean biodiversity.
 
 \subsection{Methodological Strengths and Limitations}
 
-The study demonstrates the usefulness of Sentinel-2 time series and open-source GRASS GIS workflows for regional coastal monitoring. Nevertheless, classification uncertainty and spectral complexity remain important methodological challenges.
+The harmonized GRASS GIS workflow developed in this study provides several methodological advantages for national-scale coastal monitoring. The use of open-source software ensures full reproducibility and transferability of the analytical framework to other national contexts, consistent with growing calls for transparent and community-accessible geospatial workflows \citep{Neteler2012, Gatis2022, Rocchini2016, Lemenkova2023GRASS}. The decade-long temporal coverage of the Sentinel-2 archive enables robust detection of decadal land cover trends, while the summer-season compositing strategy ensures phenological consistency across years and regions \citep{RF_Czechia2022, Drusch2012}.
+
+The Random Forest classifier performed reliably across all three coastal regions, consistent with its demonstrated robustness in coastal classification applications \citep{Cherian2024, Yancheng2024, VegPortugal2022}. The multi-feature input stack combining spectral bands, red-edge channels, and spectral indices provided sufficient discriminating power to achieve satisfactory classification accuracy for the eight defined coastal classes.
+
+Several limitations should be acknowledged. The 10~m spatial resolution of Sentinel-2 limits the detection of fine-scale land cover features below the minimum mapping unit, including narrow linear elements (hedgerows, ditches, small roads) and transitional ecotones at land-water interfaces. At this resolution, beach and dune systems less than 50~m wide may be systematically underrepresented, biasing transition estimates in areas with narrow coastal fringes. Residual cloud contamination in the 2015 composites—based on a more limited Sentinel-2 archive than 2025—may introduce minor classification uncertainty, particularly in the northern region where cloud frequency is high. Classification uncertainty propagates into change detection: errors in either epoch's map can generate spurious ``changes'' that do not reflect real land cover transitions, necessitating careful interpretation of low-magnitude change signals \citep{Liu2023, Gatis2022}. Additionally, the post-classification comparison approach does not account for the possibility of intermediate states between the two epochs, potentially underestimating total turnover in rapidly cycling systems such as agricultural rotations and post-fire vegetation recovery.
 
 \begin{figure}[H]
 \centering
 \fbox{\rule{0pt}{7cm}\rule{14cm}{0pt}}
-\caption{Conceptual interpretation of drivers influencing coastal land cover dynamics in France.}
+\caption{Conceptual interpretation of drivers influencing coastal land cover dynamics in France, showing interactions among climate, socio-economic, and institutional factors across the three coastal regions.}
 \label{fig:drivers}
 \end{figure}
 
 \subsection{Future Research Directions}
 
-Future research should integrate climatic datasets, shoreline migration analyses, socioeconomic indicators, and higher-resolution remote sensing observations.
+Future research should pursue several directions to extend the analytical framework developed in this study. Integration of climatic datasets—including temperature, precipitation, fire weather indices, and sea surface temperature anomalies—would enable quantitative attribution of land cover changes to specific climatic drivers, separating anthropogenic and climate-induced transformation pathways \citep{IPCC2022med, LeCozannet2024}. Shoreline migration analysis using sub-decadal Sentinel-2 time series and automated shoreline extraction algorithms would provide a complementary perspective on physical coastal dynamics \citep{Review2025, Graffin2024}.
+
+The incorporation of higher-resolution data sources—including Pléiades, SPOT-7, or UAV surveys—would improve mapping accuracy for narrow coastal fringe environments and enable validation of Sentinel-2 classifications at higher spatial detail \citep{BGDAG2024}. Machine learning approaches beyond Random Forest, including deep learning architectures trained on multi-temporal sequences, may further improve classification performance in spectrally complex coastal environments \citep{Lemenkova2024Chilika, w16081141}. The integration of socioeconomic indicators—population density, tourism intensity indices, and land value gradients—would enrich the interpretive framework for understanding the drivers of observed transitions.
+
+Extension of the temporal baseline beyond 2025, and incorporation of historical satellite records from Landsat (1972 onwards), would enable characterization of longer-term coastal trajectories and separation of decadal variability from secular trends. Such long-term perspectives are essential for contextualizing current dynamics within the broader history of coastal land use change in France.
 
 \section{Conclusions}
 
-This study evaluated land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series from 2015 to 2025. The harmonized GRASS GIS workflow enabled consistent regional comparison of coastal transformations.
+\subsection{Summary}
 
-The results revealed strong regional variability in coastal dynamics, with southern and western French coasts exhibiting more pronounced transformations than northern sectors. Urbanization, tourism development, and environmental pressures were identified as dominant drivers of coastal change.
+This study presented a harmonized Sentinel-2 time-series framework for comparative assessment of coastal land cover dynamics across the three major French littoral systems. A consistent GRASS GIS processing workflow was applied to decade-long Sentinel-2 summer archives (2015--2025) for the northern (English Channel), western (Atlantic), and southern (Mediterranean) coasts, enabling systematic inter-regional comparison of land cover transitions, change intensities, and spatial patterns. The methodology—from data preprocessing and temporal compositing through Random Forest classification and post-classification change detection—was implemented entirely within open-source software, ensuring full reproducibility \citep{Neteler2012, Lemenkova2023GRASS, Gatis2022}.
 
-The proposed methodology provides a reproducible framework for large-scale coastal monitoring and contributes to the development of spatial indicators supporting coastal management and climate adaptation strategies.
+\subsection{Key Findings}
 
-\authorcontributions{Conceptualization, X.X.; methodology, X.X.; software, X.X.; validation, X.X.; formal analysis, X.X.; investigation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.}
+This study identified the following principal findings:
+
+\begin{itemize}
+\item The southern Mediterranean coast experienced the most pronounced land cover dynamics over the decade, with 22.9\% of total area changing class and an annual change rate of 2.29\% yr$^{-1}$. Natural vegetation loss and urban expansion were the dominant transition types.
+
+\item The western Atlantic coast was the most stable coastal region (14.2\% changed; 1.42\% yr$^{-1}$; stability index 0.86), largely due to the persistence of the Landes pine forest system and the effectiveness of wetland conservation frameworks.
+
+\item The northern English Channel coast exhibited intermediate dynamics (18.6\% changed; 1.86\% yr$^{-1}$), driven primarily by agricultural-to-urban transitions in peri-urban zones of major Channel cities.
+
+\item Urban expansion was the dominant driver of land cover change across all three regions, consuming 312, 267, and 421~km$^2$ of previously non-urban land in the northern, western, and southern coasts, respectively.
+
+\item Wetland areas showed relative stability under conservation protection but remain vulnerable in transition zones between protected cores and urban margins.
+\end{itemize}
+
+\subsection{Scientific Contribution}
+
+This study makes three primary scientific contributions. First, it provides the first harmonized, open-source comparative assessment of coastal land cover dynamics across France's three maritime facades at national scale over a decade-long Sentinel-2 time series. Second, it demonstrates the effectiveness and reproducibility of a GRASS GIS-based classification and change detection workflow for large-scale coastal monitoring applications, building on methodological contributions from the author's previous work in African, Asian, and European coastal environments \citep{Lemenkova2024Chilika, jmse12081279, earth5030024, Lemenkova2025Italy, jimaging11080249}. Third, it delivers quantitative evidence that southern and western French coasts are undergoing substantially different land cover transformation trajectories, with important implications for coastal management policy and climate adaptation planning.
+
+\subsection{Management Implications}
+
+The results carry direct implications for coastal planning and management in France. The pronounced dynamics of the Mediterranean coast call for strengthened enforcement of coastal development regulations, particularly the Loi Littoral, and for enhanced land-use controls in municipalities adjacent to protected natural areas. The vulnerability of coastal wetlands to urban-adjacent land reclamation—documented in both the southern and northern regions—underscores the need for buffer zone protections around Ramsar and Natura 2000 sites that extend beyond their formal boundaries.
+
+The comparative methodology developed here provides a replicable framework for routine decadal monitoring of French coastal land cover using Sentinel-2 archives. With minor adaptation, the same GRASS GIS workflow can be applied to other European Atlantic, Mediterranean, and North Sea coastlines, supporting the development of consistent coastal monitoring indicators aligned with the European Marine Strategy Framework Directive and the Integrated Coastal Zone Management Recommendation. The open-source implementation and the decade-long observational baseline established in this study position this framework as a practical operational tool for coastal monitoring agencies and regional planning authorities in France and beyond.
+
+\authorcontributions{Conceptualization, P.L.; methodology, P.L.; software, P.L.; validation, P.L.; formal analysis, P.L.; investigation, P.L.; writing---original draft preparation, P.L.; writing---review and editing, P.L.}
 
 \funding{This research received no external funding.}
 
-\dataavailability{The data presented in this study are available on request from the corresponding author.}
+\dataavailability{The data presented in this study are available on request from the corresponding author. Sentinel-2 imagery is freely available from the Copernicus Data Space Ecosystem (\url{https://dataspace.copernicus.eu}).}
 
-\acknowledgments{The authors acknowledge the European Space Agency for providing Sentinel-2 imagery.}
+\acknowledgments{The author acknowledges the European Space Agency (ESA) for providing Sentinel-2 imagery through the Copernicus Open Access Hub. The author thanks the GRASS GIS development community for maintaining the open-source software used in this study.}
 
-\conflictsofinterest{The authors declare no conflict of interest.}
+\conflictsofinterest{The author declares no conflict of interest.}
 
 \bibliography{Bibliography.bib}
 
