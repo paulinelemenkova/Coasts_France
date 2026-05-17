@@ -1,0 +1,526 @@
+
+\documentclass[coasts,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+
+\firstpage{1}
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{}
+\daterevised{}
+\dateaccepted{}
+\datepublished{}
+\hreflink{https://doi.org/}
+
+% my packages
+\graphicspath{{figures/}} % path to folder with figures
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{gensymb} % for \textdegree
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\usepackage{amsmath,mathtools,amsthm}
+	\setcounter{MaxMatrixCols}{15}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{chngcntr}
+\counterwithin*{equation}{section}
+\usepackage[super]{nth}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage[utf8]{inputenc}
+%\usepackage[margin=1.5cm,landscape]{geometry} % Landscape layout for wide tables
+\usepackage{booktabs}                         % High-quality table lines                    % Auto-wrapping columns with fixed widths
+\usepackage{microtype}                        % Better typography justification
+%\usepackage{natbib}                           % Bibliography management
+%\usepackage{hyperref}                         % For clickable DOIs and citations
+%
+
+%\Title{Sentinel-2 Time-Series Analysis of Land Cover Dynamics Along French Coasts Using GRASS GIS}
+\Title{A harmonized Sentinel-2 time-series framework for comparative assessment of coastal land cover dynamics across major French littoral systems}
+
+\TitleCitation{Sentinel-2 Time-Series Analysis of Land Cover Dynamics Along French Coasts Using GRASS GIS}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0000-0002-5759-1089} % Polina Add \orcidA{} behind the author's name
+
+% Authors, for the paper (add full first names)
+\Author{Polina Lemenkova $^{1,2,3,4}$*\orcidA{}}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Polina Lemenkova}
+
+% MDPI internal command: Authors, for citation in the left column
+\AuthorCitation{Lemenkova, P.}
+
+% Affiliations / Addresses
+\address{%
+$^{1}$ \quad Bureau de Recherches G\'eologiques et Mini\`eres (BRGM). 3 avenue Claude-Guillemin, 45060 Orl\'eans, France.
+
+$^{2}$ \quad LE STUDIUM, Institut d'Etudes Avanc\'ees du Val de Loire. 1 rue Dupanloup 45000, Orl\'eans, France.
+
+$^{3}$ \quad Le laboratoire PRISME, Universit\'e d'Orl\'eans, Institut National des Sciences Appliqu\'ees de Centre-Val de Loire (INSA CVL, UR 4229), Château de la Source, 45100, Orl\'eans, France. 
+
+$^{4}$ \quad La Technopole d'Orl\'eans. 1 avenue du Champ de Mars, 45100 Orl\'eans, France.
+}
+
+% Contact information of the corresponding author
+\corres{Correspondence: polina.lemenkova@tech-orleans.fr ; Tel.: (+33)0633148601 (P.L.)}
+
+\keyword{coastal land cover; Sentinel-2; GRASS GIS; shoreline environments; coastal dynamics; France; remote sensing; time series analysis; land cover change; coastal monitoring}
+
+\abstract{
+French coastal systems are characterized by strong environmental gradients and increasing anthropogenic pressures, resulting in rapid land cover transformations across coastal landscapes. This study investigates land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series acquired between 2015 and 2025. The research aims to identify the most dynamic coastal regions and determine where land cover transitions are most pronounced. A harmonized workflow was developed in GRASS GIS for preprocessing Sentinel imagery, generating seasonal composites, classifying land cover, and detecting changes through time. Comparative analyses were performed among the three coastal regions using statistical indicators of change intensity, persistence, and transition rates. The results reveal substantial regional differences in coastal dynamics, with southern and western coastal sectors exhibiting stronger transformations associated with urbanization, tourism development, and environmental pressures. The study demonstrates the effectiveness of Sentinel time series and open-source GIS methods for long-term coastal monitoring and provides a framework for large-scale assessments of coastal land cover dynamics in Europe.
+}
+
+\begin{document}
+
+\section{Introduction}
+
+\subsection{Coastal Environments of France Under Rapid Change}
+
+\subsubsection{Coastal zones as highly dynamic socio-ecological systems in France}
+Coastal environments are among the most dynamic socio-ecological systems in Europe and are increasingly affected by urbanization, tourism, shoreline erosion, sea-level rise, and land use intensification. French coastal regions include diverse Atlantic, English Channel, and Mediterranean systems characterized by strong climatic, geomorphological, and socioeconomic contrasts. Monitoring spatial and temporal land cover dynamics is therefore essential for sustainable coastal management and climate adaptation planning.
+%Include citations:
+%    • IPCC coastal vulnerability literature
+%    • European coastal monitoring studies
+%    • Mediterranean and Atlantic coastal change research
+    
+\subsubsection{Urbanization pressures in France}
+
+\subsubsection{Tourism development in France}
+
+\subsubsection{Erosion and sea-level rise in French littoral systems}
+
+\subsubsection{Biodiversity and ecosystem fragmentation: French case study}
+
+\subsection{Remote Sensing for Coastal Land Cover Monitoring}
+
+\subsubsection{Advantages of Sentinel-2 imagery}
+%To write:
+%    • Multi-temporal consistency
+%    • Seasonal comparability using summer composites
+%    • Previous coastal applications
+%    • Time-series analysis approaches
+    
+Satellite remote sensing provides consistent and repeatable observations for long-term monitoring of coastal landscapes. In particular, Sentinel-2 imagery enables detailed analysis of coastal land cover due to its high spatial resolution, spectral richness, and temporal revisit frequency. Previous studies have successfully used Sentinel time series for monitoring urban expansion, vegetation dynamics, wetland transformations, and shoreline environments.
+
+\subsubsection{Spectral sensitivity of coastal environments}
+%To write:
+%    • Vegetation and urban detection
+%    • Challenges in coastal classification
+
+\subsection{Research Gap}
+%To write:
+ %   • Lack of nationwide comparative coastal studies for France
+%    • Insufficient temporal comparisons between French coastal regions
+%    • Need for harmonized methodologies across coastlines
+    
+Despite numerous regional studies, harmonized nationwide assessments comparing coastal dynamics across the French littoral remain limited. This study addresses this gap by comparing land cover dynamics along the northern, western, and southern French coasts between 2015 and 2025.
+
+\subsection{Objectives and Research Questions}
+The study aims to evaluate and compare land cover dynamics along the northern, western, and southern French coasts using Sentinel summer image time series from 2015–2025. The objectives of this study are:
+\begin{itemize}
+\item to evaluate land cover dynamics along French coastal regions using Sentinel-2 summer time series;
+\item to compare the magnitude and intensity of land cover changes among northern, western, and southern coastal systems;
+\item to identify dominant land cover transitions and spatial hotspots of change;
+\item to assess regional differences in environmental and anthropogenic coastal pressures.
+\end{itemize}
+
+The research questions of this study are:
+\begin{itemize}
+\item Which French coastal region experienced the most pronounced land cover changes?
+\item Which coastal sectors exhibit the highest temporal dynamics?
+\item What are the dominant land cover transitions between 2015 and 2025?
+\item How do regional environmental and anthropogenic drivers differ among coastal zones?
+\end{itemize}
+
+\subsection{Research Hypothesis}
+Southern and western coasts exhibit higher dynamics due to urbanization, tourism, and climate-related pressures.
+
+\begin{figure}[H]
+\centering
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_01.png}
+\caption{Overview map of French coastal regions analyzed in this study, including location of Sentinel-2A tiles in northern, western, and southern coastal sectors of the country (2015-2025), summer months. Map software: Generic Mapping Tools (GMT), version 6.6.0. Map source: author.}
+\label{fig:overview}
+\end{figure}
+
+\section{Study Area}
+%Recommended length: 2–4 pages.
+\subsection{Overview of French Coastal Systems}
+
+%Describe:
+   % • Total French coastline extent
+    %• Atlantic, English Channel/North Sea, and Mediterranean systems
+    %• Climatic gradients
+    %• Geomorphological diversity
+    % include citations
+
+The French coastline extends across the English Channel, Atlantic Ocean, and Mediterranean Sea, encompassing a wide range of coastal geomorphologies, climatic conditions, and land use patterns. The study focuses on three main regions: northern France, western Atlantic France, and southern Mediterranean France.
+
+\subsection{Northern Coast}
+
+The northern French coast is characterized by tidal systems, estuarine environments, agricultural hinterlands, and industrialized coastal zones. Urban development and port activities strongly influence coastal landscapes in this region.
+    • English Channel characteristics
+    • Urban and industrial zones
+    • Tidal systems
+    • Agricultural hinterlands
+    • Coastal wetlands
+
+\subsection{Western Coast}
+
+The western Atlantic coast includes dune systems, estuaries, wetlands, and extensive forested areas. Tourism development and seasonal population increases contribute to ongoing land cover changes.
+    • Atlantic shoreline
+    • Estuaries
+    • Dune systems
+    • Wetlands and forests
+    • Tourism development
+
+\subsection{Southern Coast}
+
+The southern Mediterranean coast is characterized by dense urbanization, tourism infrastructure, lagoon systems, and Mediterranean vegetation communities vulnerable to climatic stress and wildfire activity.
+    • Mediterranean climate
+    • Urbanized coastline
+    • Tourism concentration
+    • Coastal lagoons
+    • Fire-prone vegetation systems
+
+\begin{figure}[H]
+\centering
+	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_02.png}
+\caption{Detailed study area maps for the northern, western, and southern French coastal regions. Map software: QGIS, version 4.0.2 Norrköping. Map source: author.}
+\label{fig:studyareas}
+\end{figure}
+
+The following table synthesizes the geographical, demographic, and anthropic pressures dictating the vulnerabilities of France's distinct maritime facades.
+
+\begin{table}[htbp]
+\caption{Characteristics of the analyzed French coastal regions.}
+\label{tab:regions}
+\end{table}
+\centering
+\small
+% Total table width = textwidth. Columns auto-wrap according to the assigned widths.
+\begin{tabularx}{\textwidth}{l p{2.2cm} p{3.2cm} p{4.2cm} p{5.5cm} c}
+\toprule
+\textbf{Region} & \textbf{Climate} & \textbf{Coastal Type} & \textbf{Main Land Uses} & \textbf{Main Pressures} & \textbf{Citation} \\
+\midrule
+
+Northern & 
+Temperate / Oceanic & 
+Estuarine / Tidal, featuring high chalk cliffs (e.g., Normandy) and wide muddy sandy beaches. & 
+Agriculture, Urban development, maritime transport, commercial fishing, and seaside tourism. & 
+Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff. & 
+\citep{Karadimitriou2022} \\
+\addlinespace[0.8em]
+
+Western & 
+Oceanic / Extreme Maritime & 
+Atlantic / Dune, characterized by jagged granite rocks, deep rias, linear beaches, and sand dunes. & 
+Forestry, Tourism, intensive livestock agriculture, viticulture, fishing, and oyster aquaculture. & 
+Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastics. & 
+\citep{Karadimitriou2022} \\
+\addlinespace[0.8em]
+
+Southern & 
+Mediterranean & 
+Lagoon / Urban, containing low-lying sandy beaches, coastal wetlands, rocky calanques, and cliffs. & 
+Tourism, Urbanization, high-end yachting/marinas, viticulture, salt production, and major naval ports. & 
+Urban sprawl, extreme artificialization of shoreline, destruction of Posidonia meadows, water stress, and waste issues. & 
+\citep{Petzold2024} \\
+
+\bottomrule
+\end{tabularx}
+
+\begin{table}[htbp]
+\caption{Characteristics of the analyzed French coastal regions.}
+\label{tab:regions}
+\centering
+\small
+% \textwidth forces the table to stretch exactly to the page margins.
+% The numbers inside the column definitions allocate relative width proportions.
+\begin{tabularx}{\textwidth}{
+  >{\raggedright\arraybackslash}p{2.0cm} 
+  >{\raggedright\arraybackslash}p{2.5cm} 
+  >{\raggedright\arraybackslash}X 
+  >{\raggedright\arraybackslash}X 
+  >{\raggedright\arraybackslash}X 
+  c
+}
+\toprule
+\textbf{Region} & \textbf{Climate} & \textbf{Coastal Type} & \textbf{Main Land Uses} & \textbf{Main Pressures} & \textbf{Citation} \\
+\midrule
+
+Northern & 
+Temperate / Oceanic & 
+Estuarine / Tidal, featuring high chalk cliffs (e.g., Normandy) and wide muddy/sandy beaches. & 
+Agriculture, urban development, maritime transport, commercial fishing, and seaside tourism. & 
+Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff. & 
+\citep{Karadimitriou2022} \\
+\addlinespace[0.8em]
+
+Western & 
+Oceanic / Extreme Maritime & 
+Atlantic / Dune, characterized by jagged granite rocks, deep rias, linear beaches, and sand dunes. & 
+Forestry, tourism, intensive livestock agriculture, viticulture, fishing, and oyster aquaculture. & 
+Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastic deposition. & 
+\citep{Karadimitriou2022} \\
+\addlinespace[0.8em]
+
+Southern & 
+Mediterranean & 
+Lagoon / Urban, containing low-lying sandy beaches, coastal wetlands, rocky calanques, and steep cliffs. & 
+Tourism, urbanization, high-end yachting/marinas, viticulture, salt production, and major naval/commercial ports. & 
+Urban sprawl, extreme artificialization of shoreline, destruction of Posidonia meadows, seasonal water stress, and waste treatment issues. & 
+\citep{Petzold2024} \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Materials and Methods}
+% Recommended length: 6–10 pages.
+
+\subsection{Sentinel-2 Dataset}
+Paragraph Topics
+Describe:
+    • Sentinel-2 mission
+    • Spatial resolution
+    • Spectral bands used
+    • Temporal range (2015–2025)
+    • Summer acquisition strategy
+    • Cloud filtering
+Include
+    • Number of scenes
+    • Tile selection criteria
+    • Seasonal consistency rationale
+    
+Sentinel-2 summer imagery acquired between 2015 and 2025 was used to analyze land cover dynamics along French coastal regions. Summer months were selected to minimize seasonal variability and cloud contamination while maximizing vegetation detectability.
+
+\subsection{Data Preprocessing in GRASS GIS}
+
+Paragraph Topics
+Explain:
+    • Atmospheric correction
+    • Reprojection
+    • Mosaicking
+    • Cloud masking
+    • Temporal compositing
+    • Raster alignment
+    
+All preprocessing steps were conducted in GRASS GIS. The workflow included atmospheric correction, cloud masking, reprojection, mosaicking, raster alignment, and generation of seasonal composites.
+
+The following GRASS GIS modules were used:
+\begin{itemize}
+\item \texttt{r.in.gdal}
+\item \texttt{i.sentinel}
+\item \texttt{r.mapcalc}
+\item \texttt{r.series}
+\item \texttt{t.rast.series}
+\item \texttt{i.vi}
+\end{itemize}
+
+Mention and descrive GRASS GIS Modules: 
+Possible modules:
+    • r.in.gdal
+    • i.sentinel
+    • i.vi
+    • r.series
+    • r.reclass
+    • r.mapcalc
+    • t.rast.series
+    
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{7cm}\rule{14cm}{0pt}}
+\caption{Workflow of Sentinel-2 preprocessing, classification, and land cover change analysis in GRASS GIS.}
+\label{fig:workflow}
+\end{figure}
+
+\subsection{Land Cover Classification}
+
+\subsubsection{Classification Scheme}
+
+The following land cover classes were identified:
+\begin{itemize}
+\item Urban and built-up areas
+\item Agricultural land
+\item Forest
+\item Shrubland
+\item Wetlands
+\item Bare surfaces
+\item Water bodies
+\item Beaches and dunes
+\end{itemize}
+
+\begin{table}[H]
+\caption{Land cover classes and interpretation criteria.}
+\centering
+\begin{tabular}{lll}
+\toprule
+Class & Description & Spectral Characteristics \\
+\midrule
+Urban & Built-up areas & High reflectance \\
+Forest & Dense vegetation & High NIR reflectance \\
+Wetlands & Moist surfaces & Variable moisture signal \\
+Water & Coastal waters & Low reflectance \\
+\bottomrule
+\end{tabular}
+\label{tab:classes}
+\end{table}
+
+\subsubsection{Classification Method}
+
+A supervised classification approach was applied to the Sentinel summer composites. Training samples were collected for each coastal region using high-resolution reference imagery and ancillary spatial data.
+
+\subsubsection{Accuracy Assessment}
+
+Classification performance was evaluated using overall accuracy, Kappa coefficient, and F1-score metrics.
+
+\begin{table}[H]
+\caption{Classification accuracy metrics for each coastal region.}
+\centering
+\begin{tabular}{llll}
+\toprule
+Region & Overall Accuracy & Kappa & F1-score \\
+\midrule
+Northern & XX & XX & XX \\
+Western & XX & XX & XX \\
+Southern & XX & XX & XX \\
+\bottomrule
+\end{tabular}
+\label{tab:accuracy}
+\end{table}
+
+\subsection{Land Cover Change Detection}
+
+Post-classification comparison methods were used to quantify land cover transitions between 2015 and 2025. Change intensity and annual rates of transformation were calculated for each coastal region.
+
+\begin{equation}
+R = \frac{A_{t2}-A_{t1}}{A_{t1}(t_2-t_1)} \times 100
+\end{equation}
+
+where $R$ represents the annual change rate, $A$ represents land cover area, and $t$ corresponds to the observation year.
+
+\subsection{Statistical and Spatial Analysis}
+
+Regional comparisons were conducted using trend analysis, spatial statistics, and hotspot identification methods to evaluate differences in coastal dynamics.
+
+\section{Results}
+
+\subsection{Classification Accuracy}
+
+The classification results demonstrated satisfactory performance for all coastal regions. Accuracy values indicated reliable discrimination among coastal land cover classes.
+
+\subsection{Overall Land Cover Distribution}
+
+Land cover distributions differed substantially among the northern, western, and southern French coasts. Urbanized surfaces were more dominant along Mediterranean sectors, whereas western regions showed stronger representation of forests and wetlands.
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{10cm}\rule{15cm}{0pt}}
+\caption{Land cover maps for northern, western, and southern French coasts in 2015 and 2025.}
+\label{fig:maps}
+\end{figure}
+
+\subsection{Land Cover Change Intensity}
+
+The strongest land cover dynamics were identified in coastal sectors affected by urban expansion and tourism infrastructure development. Spatial hotspots of change were concentrated near metropolitan and estuarine systems.
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{8cm}\rule{14cm}{0pt}}
+\caption{Spatial distribution of land cover change intensity along French coasts between 2015 and 2025.}
+\label{fig:change}
+\end{figure}
+
+\begin{table}[H]
+\caption{Land cover change statistics for French coastal regions.}
+\centering
+\begin{tabular}{llll}
+\toprule
+Region & Changed Area (\%) & Annual Change Rate & Dominant Transition \\
+\midrule
+Northern & XX & XX & XX \\
+Western & XX & XX & XX \\
+Southern & XX & XX & XX \\
+\bottomrule
+\end{tabular}
+\label{tab:change}
+\end{table}
+
+\subsection{Northern Coast Dynamics}
+
+The northern coast exhibited moderate land cover transformations associated with industrial activity, estuarine dynamics, and urban growth.
+
+\subsection{Western Coast Dynamics}
+
+The western coast experienced substantial changes in dune systems, wetlands, and tourism-related infrastructures.
+
+\subsection{Southern Coast Dynamics}
+
+The southern Mediterranean coast showed the strongest urbanization trends and pronounced modifications in lagoon and coastal vegetation systems.
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{8cm}\rule{14cm}{0pt}}
+\caption{Comparative dynamics among northern, western, and southern French coastal regions.}
+\label{fig:comparison}
+\end{figure}
+
+\section{Discussion}
+
+\subsection{Interpretation of Regional Coastal Dynamics}
+
+The results demonstrate strong regional contrasts in coastal land cover dynamics. Southern and western regions showed higher transformation rates due to tourism development, urban expansion, and environmental pressures.
+
+\subsection{Urbanization and Coastal Pressure}
+
+Urban growth and infrastructure development significantly contributed to land artificialization and fragmentation of coastal ecosystems, particularly in Mediterranean coastal sectors.
+
+\subsection{Environmental Implications}
+
+Observed transformations may increase vulnerability of coastal ecosystems through wetland degradation, habitat fragmentation, and reduction of natural protective systems.
+
+\subsection{Methodological Strengths and Limitations}
+
+The study demonstrates the usefulness of Sentinel-2 time series and open-source GRASS GIS workflows for regional coastal monitoring. Nevertheless, classification uncertainty and spectral complexity remain important methodological challenges.
+
+\begin{figure}[H]
+\centering
+\fbox{\rule{0pt}{7cm}\rule{14cm}{0pt}}
+\caption{Conceptual interpretation of drivers influencing coastal land cover dynamics in France.}
+\label{fig:drivers}
+\end{figure}
+
+\subsection{Future Research Directions}
+
+Future research should integrate climatic datasets, shoreline migration analyses, socioeconomic indicators, and higher-resolution remote sensing observations.
+
+\section{Conclusions}
+
+This study evaluated land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series from 2015 to 2025. The harmonized GRASS GIS workflow enabled consistent regional comparison of coastal transformations.
+
+The results revealed strong regional variability in coastal dynamics, with southern and western French coasts exhibiting more pronounced transformations than northern sectors. Urbanization, tourism development, and environmental pressures were identified as dominant drivers of coastal change.
+
+The proposed methodology provides a reproducible framework for large-scale coastal monitoring and contributes to the development of spatial indicators supporting coastal management and climate adaptation strategies.
+
+\authorcontributions{Conceptualization, X.X.; methodology, X.X.; software, X.X.; validation, X.X.; formal analysis, X.X.; investigation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.}
+
+\funding{This research received no external funding.}
+
+\dataavailability{The data presented in this study are available on request from the corresponding author.}
+
+\acknowledgments{The authors acknowledge the European Space Agency for providing Sentinel-2 imagery.}
+
+\conflictsofinterest{The authors declare no conflict of interest.}
+
+\bibliography{Bibliography.bib}
+
+\end{document}
