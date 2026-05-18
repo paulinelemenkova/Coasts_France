@@ -18,6 +18,32 @@
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{xcolor}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!8},
+  frame=single,
+  framerule=0.4pt,
+  rulecolor=\color{gray!40},
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  commentstyle=\color{gray!70}\itshape,
+  keywordstyle=\color{blue!70}\bfseries,
+  stringstyle=\color{green!50!black},
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  numbersep=6pt,
+  xleftmargin=14pt,
+  captionpos=b,
+  aboveskip=8pt,
+  belowskip=4pt,
+  morekeywords={r.in.gdal,i.sentinel,i.sentinel.import,r.mapcalc,r.series,
+    t.rast.series,i.vi,r.reclass,r.patch,r.learn.train,r.learn.predict,
+    r.category,r.report,r.univar,g.list,g.findfile,t.create,t.register,
+    t.rast.mapcalc,declare,echo,if,fi,for,do,done,then,cat}
+}
 \usepackage{gensymb}
 \usepackage{tabularx}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
@@ -277,6 +303,326 @@ The following GRASS GIS modules were central to the preprocessing workflow:
 \item \texttt{i.vi} — computation of vegetation and spectral indices
 \item \texttt{r.reclass} — reclassification of classified raster maps
 \end{itemize}
+
+\subsection{GRASS GIS Scripting Techniques}
+
+The preprocessing, compositing, index computation, and change detection steps described above were implemented as reproducible shell scripts invoking GRASS GIS modules from the command line and followed existing methodologies \citep{Lemenkova202405,Lemenkova202322,Lemenkova202323}. Seven representative scripts are presented below, each illustrating a distinct stage of the analytical workflow. All scripts assume an active GRASS GIS session with the mapset correctly configured (EPSG:2154, Lambert-93) and the relevant input rasters already available within the session.
+
+% ---- Script 1: r.in.gdal -------------------------------------------------
+\subsubsection*{Script 1: Raster Data Import with \texttt{r.in.gdal}}
+
+The first script imports all Sentinel-2 Level-2A bands for a single tile into the GRASS GIS mapset. Each band is imported individually, preserving the original radiometric scaling of the BOA reflectance product. The \texttt{--overwrite} flag allows iterative re-import during quality control without manual deletion of existing maps.
+
+\begin{lstlisting}[language=bash, caption={Import of Sentinel-2 Level-2A surface reflectance bands using \texttt{r.in.gdal}.}, label={lst:ingdal}]
+#!/bin/bash
+# Script 1: Import Sentinel-2 Level-2A bands into GRASS GIS
+# Assumes an active GRASS session (EPSG:2154, Lambert-93).
+# All ten spectral bands are imported and renamed systematically.
+
+TILE_DIR="/data/S2A_MSIL2A_20250715_T30TXQ/GRANULE/L2A_T30TXQ_20250715/IMG_DATA/R10m"
+REGION="north"  # north | west | south
+
+declare -A BANDS
+BANDS=([B02]="blue" [B03]="green" [B04]="red" [B08]="nir")
+
+for band in "${!BANDS[@]}"; do
+    label="${BANDS[$band]}"
+    infile="${TILE_DIR}/T30TXQ_20250715_${band}_10m.jp2"
+    outname="${REGION}_${label}_2025"
+
+    r.in.gdal \
+        input="${infile}" \
+        output="${outname}" \
+        --overwrite
+
+    echo "Imported ${band} as ${outname}"
+done
+
+# Import 20-m red-edge and SWIR bands (resampled to 10 m on import)
+R20M="${TILE_DIR/../R20m}"
+for band in B05 B06 B07 B8A B11 B12; do
+    r.in.gdal \
+        input="${R20M}/T30TXQ_20250715_${band}_20m.jp2" \
+        output="${REGION}_${band,,}_2025" \
+        resolution=10 \
+        --overwrite
+    echo "Imported 20-m band ${band} at 10-m resolution"
+done
+\end{lstlisting}
+
+% ---- Script 2: i.sentinel -------------------------------------------------
+\subsubsection*{Script 2: Sentinel-2 Band Management with \texttt{i.sentinel}}
+
+The \texttt{i.sentinel} toolset provides dedicated routines for downloading, importing, and cloud-masking Sentinel-2 products. The script below demonstrates automated import of a complete Level-2A scene including the Scene Classification Layer (SCL), which is subsequently used to generate the cloud mask in Script~3.
+
+\begin{lstlisting}[language=bash, caption={Sentinel-2 scene import and band registration using \texttt{i.sentinel.import}.}, label={lst:isentinel}]
+#!/bin/bash
+# Script 2: Import a Sentinel-2 Level-2A SAFE archive using i.sentinel.
+# i.sentinel.import handles band renaming, SCL import, and
+# spatial subsetting to the current GRASS computational region.
+
+SAFE_DIR="/data/S2A_MSIL2A_20250715T103021_T30TXQ.SAFE"
+REGION="north"
+
+# Import all bands and the SCL at 10-m resolution
+i.sentinel.import \
+    input="${SAFE_DIR}" \
+    pattern="B0[2348]_10m|B0[5-7]_20m|B8A_20m|B1[12]_20m|SCL_20m" \
+    pattern_file="MSK_CLOUDS_B00.gml" \
+    extent=region \
+    memory=2048 \
+    --overwrite
+
+# List imported maps to verify completeness
+g.list type=raster pattern="${REGION}*2025" mapset=.
+
+# Register maps in the current temporal database for time-series use
+t.register \
+    input="${REGION}_sentinel2_2025" \
+    maps=$(g.list type=raster pattern="${REGION}*2025" sep=comma) \
+    start="2025-07-15" \
+    increment="1 days"
+\end{lstlisting}
+
+% ---- Script 3: r.mapcalc --------------------------------------------------
+\subsubsection*{Script 3: Cloud Masking and Radiometric Normalization with \texttt{r.mapcalc}}
+
+Cloud masking is performed by evaluating the SCL raster against the cloud and cloud-shadow class codes (3, 8, 9, 10). The resulting binary cloud mask is applied to each spectral band using \texttt{r.mapcalc} map algebra, setting contaminated pixels to null. A subsequent \texttt{r.mapcalc} expression implements empirical line normalization against stable reference targets to correct residual inter-tile radiometric offsets.
+
+\begin{lstlisting}[language=bash, caption={Cloud masking and empirical radiometric normalization using \texttt{r.mapcalc}.}, label={lst:rmapcalc}]
+#!/bin/bash
+# Script 3: Apply SCL-based cloud masking and radiometric normalization.
+# SCL classes: 3=cloud shadow, 8=medium probability cloud,
+# 9=high probability cloud, 10=thin cirrus.
+
+REGION="north"
+YEAR=2025
+SCL="${REGION}_scl_${YEAR}"
+
+# Step 1 -- Generate binary cloud mask (1 = valid, null = contaminated)
+r.mapcalc \
+    expression="${REGION}_cloudmask_${YEAR} = \
+        if(${SCL} == 3 || ${SCL} == 8 || ${SCL} == 9 || ${SCL} == 10, \
+           null(), 1)" \
+    --overwrite
+
+# Step 2 -- Apply cloud mask to each spectral band
+for band in blue green red nir b05 b06 b07 b8a b11 b12; do
+    r.mapcalc \
+        expression="${REGION}_${band}_${YEAR}_masked = \
+            ${REGION}_${band}_${YEAR} * ${REGION}_cloudmask_${YEAR}" \
+        --overwrite
+    echo "Cloud mask applied to ${band}"
+done
+
+# Step 3 -- Radiometric normalization (gain/offset from reference targets)
+# Reference: dense forest ROI, empirically determined gain = 1.02, offset = -50
+GAIN=1.02
+OFFSET=-50
+r.mapcalc \
+    expression="${REGION}_nir_${YEAR}_norm = \
+        (${REGION}_nir_${YEAR}_masked * ${GAIN}) + ${OFFSET}" \
+    --overwrite
+\end{lstlisting}
+
+% ---- Script 4: r.series ---------------------------------------------------
+\subsubsection*{Script 4: Median Temporal Compositing with \texttt{r.series}}
+
+Median compositing aggregates the cloud-free scenes from all summer acquisitions of a given year into a single, representative composite raster. The median statistic is preferred over the mean because it is robust to residual cloud-contaminated outliers. The script iterates over all spectral bands and generates the 2025 summer composite for one coastal region.
+
+\begin{lstlisting}[language=bash, caption={Median summer compositing of Sentinel-2 scenes using \texttt{r.series}.}, label={lst:rseries}]
+#!/bin/bash
+# Script 4: Generate median summer composite from cloud-masked scenes.
+# Scenes are from June-August 2025; the median is used to suppress
+# residual cloud and shadow outliers.
+
+REGION="north"
+YEAR=2025
+
+for band in blue green red nir b05 b06 b07 b8a b11 b12; do
+    # Collect all masked scene rasters for this band and season
+    INPUTS=$(g.list \
+        type=raster \
+        pattern="${REGION}_${band}_${YEAR}??_masked" \
+        sep=comma)
+
+    if [ -z "${INPUTS}" ]; then
+        echo "No scenes found for band ${band} -- skipping."
+        continue
+    fi
+
+    r.series \
+        input="${INPUTS}" \
+        output="${REGION}_${band}_${YEAR}_comp" \
+        method=median \
+        --overwrite
+
+    echo "Median composite created: ${REGION}_${band}_${YEAR}_comp"
+done
+
+# Verify output statistics for quality control
+r.univar map="${REGION}_nir_${YEAR}_comp"
+\end{lstlisting}
+
+% ---- Script 5: t.rast.series ----------------------------------------------
+\subsubsection*{Script 5: Temporal Raster Database Management with \texttt{t.rast.series}}
+
+The \texttt{t.rast.series} module operates on Space-Time Raster Datasets (STRDS), allowing time-aware aggregation and temporal algebra across the entire ten-year archive. The script below creates a STRDS, registers all annual composites, and derives a temporal mean NDVI stack to characterize inter-annual vegetation dynamics across the study period.
+
+\begin{lstlisting}[language=bash, caption={Space-Time Raster Dataset creation and temporal aggregation using \texttt{t.rast.series}.}, label={lst:trast}]
+#!/bin/bash
+# Script 5: Register annual composites in a STRDS and perform
+# temporal aggregation to derive decadal mean NDVI (2015-2025).
+
+REGION="north"
+
+# Create the Space-Time Raster Dataset
+t.create \
+    output="${REGION}_ndvi_strds" \
+    type=strds \
+    temporaltype=absolute \
+    title="Annual NDVI composites ${REGION} coast 2015-2025" \
+    description="Summer median NDVI, Lambert-93"
+
+# Register all annual NDVI composites (one per year, July 1)
+for year in $(seq 2015 2025); do
+    map="${REGION}_ndvi_${year}_comp"
+    if g.findfile element=raster file="${map}" > /dev/null 2>&1; then
+        t.register \
+            input="${REGION}_ndvi_strds" \
+            maps="${map}" \
+            start="${year}-07-01" \
+            end="${year}-09-01"
+        echo "Registered ${map}"
+    fi
+done
+
+# Compute decadal temporal mean NDVI across all registered maps
+t.rast.series \
+    input="${REGION}_ndvi_strds" \
+    output="${REGION}_ndvi_decadal_mean" \
+    method=average \
+    --overwrite
+
+# Compute temporal standard deviation to map inter-annual variability
+t.rast.series \
+    input="${REGION}_ndvi_strds" \
+    output="${REGION}_ndvi_decadal_stddev" \
+    method=stddev \
+    --overwrite
+
+echo "Decadal temporal statistics computed for ${REGION}"
+\end{lstlisting}
+
+% ---- Script 6: i.vi -------------------------------------------------------
+\subsubsection*{Script 6: Spectral Index Computation with \texttt{i.vi}}
+
+The \texttt{i.vi} module provides a standardized interface for computing a range of vegetation and spectral indices from Sentinel-2 band composites. The script computes NDVI, NDWI, the Normalized Burn Ratio (NBR), and the Bare Soil Index (BSI), which together constitute the spectral index component of the 14-feature classification stack.
+
+\begin{lstlisting}[language=bash, caption={Computation of vegetation and spectral indices from Sentinel-2 composites using \texttt{i.vi}.}, label={lst:ivi}]
+#!/bin/bash
+# Script 6: Compute spectral indices (NDVI, NDWI, NBR, BSI) from
+# the 2025 median composite bands for one coastal region.
+
+REGION="north"
+YEAR=2025
+SFX="${REGION}_*_${YEAR}_comp"   # naming pattern for composite bands
+
+RED="${REGION}_red_${YEAR}_comp"
+NIR="${REGION}_nir_${YEAR}_comp"
+GREEN="${REGION}_green_${YEAR}_comp"
+SWIR1="${REGION}_b11_${YEAR}_comp"
+SWIR2="${REGION}_b12_${YEAR}_comp"
+
+# NDVI -- Normalized Difference Vegetation Index
+i.vi \
+    red="${RED}" \
+    nir="${NIR}" \
+    output="${REGION}_ndvi_${YEAR}" \
+    viname=ndvi \
+    --overwrite
+echo "NDVI computed"
+
+# NDWI -- Normalized Difference Water Index (Gao 1996: NIR-SWIR1)
+r.mapcalc \
+    expression="${REGION}_ndwi_${YEAR} = \
+        float(${NIR} - ${SWIR1}) / float(${NIR} + ${SWIR1})" \
+    --overwrite
+echo "NDWI computed"
+
+# NBR --  Normalized Burn Ratio (NIR-SWIR2)
+r.mapcalc \
+    expression="${REGION}_nbr_${YEAR} = \
+        float(${NIR} - ${SWIR2}) / float(${NIR} + ${SWIR2})" \
+    --overwrite
+echo "NBR computed"
+
+# BSI -- Bare Soil Index ((SWIR1+RED) - (NIR+BLUE)) / (SWIR1+RED+NIR+BLUE)
+BLUE="${REGION}_blue_${YEAR}_comp"
+r.mapcalc \
+    expression="${REGION}_bsi_${YEAR} = \
+        float((${SWIR1} + ${RED}) - (${NIR} + ${BLUE})) / \
+        float((${SWIR1} + ${RED}) + (${NIR} + ${BLUE}))" \
+    --overwrite
+echo "BSI computed"
+
+# Summarize output range for QC
+for idx in ndvi ndwi nbr bsi; do
+    r.univar map="${REGION}_${idx}_${YEAR}" -g
+done
+\end{lstlisting}
+
+% ---- Script 7: r.reclass --------------------------------------------------
+\subsubsection*{Script 7: Post-Classification Reclassification with \texttt{r.reclass}}
+
+Following Random Forest classification with \texttt{r.learn.predict}, the integer output map is reclassified from model-internal class codes to the CORINE-aligned eight-class scheme used in this study. The \texttt{r.reclass} module reads a plain-text rules file that maps each input code to an output code, and the \texttt{r.category} module attaches descriptive labels for cartographic output and statistical reporting.
+
+\begin{lstlisting}[language=bash, caption={Reclassification of Random Forest output to the CORINE-aligned class scheme using \texttt{r.reclass}.}, label={lst:rreclass}]
+#!/bin/bash
+# Script 7: Reclassify Random Forest classification output (integer codes)
+# to the eight-class CORINE Level-1 coastal scheme and attach labels.
+
+REGION="north"
+YEAR=2025
+RF_OUT="${REGION}_rf_raw_${YEAR}"
+RECLASS_OUT="${REGION}_landcover_${YEAR}"
+RULES_FILE="/data/reclass_rules_${REGION}.txt"
+
+# Write reclassification rules to a temporary file
+# Format: <input_code> = <output_code> <label>
+cat > "${RULES_FILE}" << 'EOF'
+1 = 1 Urban and built-up
+2 = 2 Agricultural land
+3 = 3 Forest
+4 = 4 Shrubland
+5 = 5 Wetlands
+6 = 6 Bare surfaces
+7 = 7 Water bodies
+8 = 8 Beaches and dunes
+* = NULL
+EOF
+
+# Apply reclassification
+r.reclass \
+    input="${RF_OUT}" \
+    output="${RECLASS_OUT}" \
+    rules="${RULES_FILE}" \
+    --overwrite
+
+# Attach category labels for legend and reporting
+r.category \
+    map="${RECLASS_OUT}" \
+    rules="${RULES_FILE}"
+
+# Compute area statistics by class (in hectares)
+r.report \
+    map="${RECLASS_OUT}" \
+    units=hectares \
+    output="/results/${REGION}_area_stats_${YEAR}.txt"
+
+echo "Reclassification complete: ${RECLASS_OUT}"
+r.univar map="${RECLASS_OUT}"
+\end{lstlisting}
 
 \begin{figure}[H]
 \centering
