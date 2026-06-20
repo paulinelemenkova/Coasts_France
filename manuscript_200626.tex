@@ -8,7 +8,7 @@
 \pubyear{2026}
 \copyrightyear{2026}
 \datereceived{19 May 2026}
-\daterevised{}
+\daterevised{20 June 2026}
 \dateaccepted{}
 \datepublished{}
 \hreflink{https://doi.org/}
@@ -190,7 +190,7 @@ The French coastline extends across the English Channel, Atlantic Ocean, and Med
 
 \begin{figure}[H]
 \centering
-	\hspace{-35pt}\includegraphics[width=13.5cm]{Figure_01.png}
+	\hspace{-35pt}\includegraphics[width=11cm]{Figure_01.png}
 \caption{Overview map of French coastal regions analyzed in this study, including location of Sentinel-2A tiles in northern, western, and southern coastal sectors of the country (2015--2025), summer months. \textcolor{blue}{In the map, the labelled major geographic places denote the principal coastal cities used as spatial reference points; the alphanumeric codes (e.g.\ ``30UXD'', ``31TGK'') are Sentinel-2 Military Grid Reference System (MGRS) identifiers of the official $100 \times 100$~km tiling grid; and the tile count given beside each city (e.g.\ ``Bordeaux -- 2 tiles'') indicates how many Sentinel-2 granules were required to cover the coastal sector around that city.} Map software: Generic Mapping Tools (GMT), version 6.6.0. Map source: author.}
 \label{fig:overview}
 \end{figure}
@@ -325,6 +325,15 @@ The following GRASS GIS modules were central to the preprocessing workflow:
 \item \texttt{i.vi} — computation of vegetation and spectral indices
 \item \texttt{r.reclass} — reclassification of classified raster maps
 \end{itemize}
+
+\textcolor{blue}{Figure~\ref{fig:s2processing} provides a complementary, stage-by-stage overview of the complete Sentinel-2 image processing pipeline applied in this study---from data acquisition and preprocessing through summer compositing, classification, change detection, and spatial comparison---together with the software tools, coordinate reference system, and data products associated with each stage. It expands the data-processing perspective of the general GRASS GIS workflow shown in Figure~\ref{fig:workflow}.}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=14.0cm]{Figure_03.png}
+\caption{\textcolor{blue}{Detailed step-by-step overview of the Sentinel-2 image processing pipeline applied in this study, complementing the general GRASS GIS workflow shown in Figure~\ref{fig:workflow}. The chain proceeds through seven stages: (1)~data acquisition of Sentinel-2 MSI Level-2A imagery (2015--2025) over the northern, western, and southern coasts; (2)~preprocessing, including atmospheric correction (Sen2Cor), cloud and shadow masking (QA60, SCL), reprojection to Lambert-93, mosaicking and clipping to the coastal buffer; (3)~generation of annual summer median composites (June--September); (4)~Random Forest land cover classification into CORINE-aligned classes with accuracy assessment (overall accuracy, Kappa); (5)~post-classification change detection (year-to-year comparison, change-matrix generation, and change maps of gains, losses, and persistence); (6)~statistical analysis of per-class areas and 2015--2025 trends; and (7)~spatial comparison of change across the three coastal regions. The software and tools, coordinate reference system (Lambert-93, EPSG:2154), and principal outputs of each stage are annotated on the diagram. Source: author.}}
+\label{fig:s2processing}
+\end{figure}
 
 \subsection{GRASS GIS Scripting Techniques}
 \label{sec:scripting}
@@ -608,7 +617,7 @@ Comparative analysis of the three regions confirms the hypothesis that the south
 \begin{figure}[H]
 \centering
 	\hspace{-35pt}\includegraphics[width=14.0cm]{Figure_09.png}
-\caption{\textcolor{blue}{Comparative dynamics among the northern, western, and southern French coastal regions: Sankey diagram of the dominant land cover transitions between 2015 and 2025, with a consistent land-cover colour scheme across the three regions. Diagram software: Python (Matplotlib). Source: author.}}
+\caption{\textcolor{blue}{Comparative dynamics among the northern, western, and southern French coastal regions: Sankey diagram of the dominant land cover transitions 2015--2025, with a land-cover colour scheme across the three regions. Diagram software: Python (Plotly library v. 6.8.0). Source: author.}}
 \label{fig:comparison}
 \end{figure}
 
@@ -1026,6 +1035,10 @@ echo "Reclassification complete: ${RECLASS_OUT}"
 r.univar map="${RECLASS_OUT}"
 \end{lstlisting}
 
+\begin{adjustwidth}{-\extralength}{0cm}
+\reftitle{References}
+
 \bibliography{Bibliography.bib}
 
+\end{adjustwidth}
 \end{document}
