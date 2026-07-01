@@ -683,7 +683,7 @@ The results demonstrate strong regional contrasts in coastal land cover dynamics
 
 \begin{figure}[H]
 \includegraphics[width=13.8cm]{Figure_10.png}
-\caption{{\hl{Conceptual} %MDPI: Please change the hyphen (-) between numbers into an en dash (−, “U+2013”), e.g., “2019-2022” should be “2019–2022” and “0-9” should be “0–9”.
+\caption{{Conceptual %MDPI: Please change the hyphen (-) between numbers into an en dash (−, “U+2013”), e.g., “2019-2022” should be “2019–2022” and “0-9” should be “0–9”. % AUTHOR: Corrected (2015–2025) changed to dash.
  matrix of the principal drivers of coastal land cover dynamics in France, showing climate and physical, socio-economic, and institutional and policy factors for each of the three coastal regions (northern, western, and southern). Each region appears once with a consistent level of driver detail. Diagram software: Python (Matplotlib). Source: author.}}
 \label{fig:drivers}
 \end{figure}
@@ -761,7 +761,7 @@ The comparative methodology developed here provides a replicable framework for r
 
 %\authorcontributions{Conceptualization, P.L.; methodology, P.L.; software, P.L.; validation, P.L.; formal analysis, P.L.; investigation, P.L.; writing---original draft preparation, P.L.; writing---review and editing, P.L. }
 
-\funding{\hl{This} %MDPI: The Author Contributions section was removed, as it is unnecessary when there is only one author. Please confirm.
+\funding{This %MDPI: The Author Contributions section was removed, as it is unnecessary when there is only one author. Please confirm. %AUTHOR: yes, confirm.
  research received no external funding.}
 
 \dataavailability{The data presented in this study are available on request from the corresponding author. Sentinel-2 imagery is freely available from the Copernicus Data Space Ecosystem (\url{https://dataspace.copernicus.eu}).}
@@ -787,7 +787,7 @@ The comparative methodology developed here provides a replicable framework for r
 {This appendix provides the seven representative shell scripts that implement the GRASS GIS processing chain summarized in Figure~\ref{fig:workflow} and outlined in Section~\ref{sec:scripting}. The scripts have been relocated here from the main methodological narrative to streamline the description of the workflow while preserving its full reproducibility. Each script illustrates a distinct stage of the analytical workflow and assumes an active GRASS GIS session with the mapset correctly configured (EPSG:2154, Lambert-93) and the relevant input rasters already available within the session.}
 
 % ---- Script 1: r.in.gdal -------------------------------------------------
-\subsection{\highlighting{Script 1:} %MDPI: We changed the command '\subsubsection' without section number to subsection and added section number. Please confirm. The following highlights are the same
+\subsection{Script 1: %MDPI: We changed the command '\subsubsection' without section number to subsection and added section number. Please confirm. The following highlights are the same %AUTHOR: yes, confirm.
  Raster Data Import with \texttt{r.in.gdal}}
 
 The first script imports all Sentinel-2 Level-2A bands for a single tile into the GRASS GIS mapset. Each band is imported individually, preserving the original radiometric scaling of the BOA reflectance product. The \texttt{--overwrite} flag allows iterative re-import during quality control without manual deletion of existing maps.
@@ -833,7 +833,7 @@ done
 
 
 % ---- Script 2: i.sentinel -------------------------------------------------
-\subsection{\highlighting{Script 2: Sentinel-2 Band Management with \texttt{i.sentinel}}}
+\subsection{Script 2: Sentinel-2 Band Management with \texttt{i.sentinel}}
 
 
 The \texttt{i.sentinel} toolset provides dedicated routines for downloading, importing, and cloud-masking Sentinel-2 products. The script below demonstrates automated import of a complete Level-2A scene including the Scene Classification Layer (SCL), which is subsequently used to generate the cloud mask in Script~3.
@@ -869,7 +869,7 @@ t.register \
 
 
 % ---- Script 3: r.mapcalc --------------------------------------------------
-\subsection{\highlighting{Script 3: Cloud Masking and Radiometric Normalization with \texttt{r.mapcalc}}}
+\subsection{Script 3: Cloud Masking and Radiometric Normalization with \texttt{r.mapcalc}}
 
 Cloud masking is performed by evaluating the SCL raster against the cloud and cloud-shadow class codes (3, 8, 9, 10). The resulting binary cloud mask is applied to each spectral band using \texttt{r.mapcalc} map algebra, setting contaminated pixels to null. A subsequent \texttt{r.mapcalc} expression implements empirical line normalization against stable reference targets to correct residual inter-tile radiometric offsets.
 
@@ -912,10 +912,9 @@ r.mapcalc \
 \end{lstlisting}
 
 % ---- Script 4: r.series ---------------------------------------------------
-\subsection{\highlighting{Script 4: Median Temporal Compositing with \texttt{r.series}}}
+\subsection{Script 4: Median Temporal Compositing with \texttt{r.series}}
 
 Median compositing aggregates the cloud-free scenes from all summer acquisitions of a given year into a single, representative composite raster. The median statistic is preferred over the mean because it is robust to residual cloud-contaminated outliers. The script iterates over all spectral bands and generates the 2025 summer composite for one coastal region.
-
 
 
 \begin{lstlisting}[language=bash,caption={Median summer compositing of Sentinel-2 scenes using \texttt{r.series}.}, label={lst:rseries},xleftmargin=11pt,xrightmargin=3.5pt]
@@ -953,7 +952,7 @@ r.univar map="${REGION}_nir_${YEAR}_comp"
 \end{lstlisting}
 
 % ---- Script 5: t.rast.series ----------------------------------------------
-\subsection{\highlighting{Script 5: Temporal Raster Database Management with \texttt{t.rast.series}}}
+\subsection{Script 5: Temporal Raster Database Management with \texttt{t.rast.series}}
 
 The \texttt{t.rast.series} module operates on Space-Time Raster Datasets (STRDS), allowing time-aware aggregation and temporal algebra across the entire ten-year archive. The script below creates a STRDS, registers all annual composites, and derives a temporal mean NDVI stack to characterize inter-annual vegetation dynamics across the study period.
 
@@ -1004,7 +1003,7 @@ echo "Decadal temporal statistics computed for ${REGION}"
 \end{lstlisting}
 
 % ---- Script 6: i.vi -------------------------------------------------------
-\subsection{\highlighting{Script 6: Spectral Index Computation with \texttt{i.vi}}}
+\subsection{Script 6: Spectral Index Computation with \texttt{i.vi}}
 
 The \texttt{i.vi} module provides a standardized interface for computing a range of vegetation and spectral indices from Sentinel-2 band composites. The script computes NDVI, NDWI, the Normalized Burn Ratio (NBR), and the Bare Soil Index (BSI), which together constitute the spectral index component of the 14-feature classification stack.
 
@@ -1064,7 +1063,7 @@ done
 \end{lstlisting}
 
 % ---- Script 7: r.reclass --------------------------------------------------
-\subsection{\highlighting{Script 7: Post-Classification Reclassification with \texttt{r.reclass}}}
+\subsection{Script 7: Post-Classification Reclassification with \texttt{r.reclass}}
 
 Following Random Forest classification with \texttt{r.learn.predict}, the integer output map is reclassified from model-internal class codes to the CORINE-aligned eight-class scheme used in this study. The \texttt{r.reclass} module reads a plain-text rules file that maps each input code to an output code, and the \texttt{r.category} module attaches descriptive labels for cartographic output and statistical reporting.
 
@@ -1176,7 +1175,8 @@ Clav{\'e}, Y.
   (SDES)}(2024)]{sdes2024merlittoral}
 {Service des donn{\'e}es et {\'e}tudes statistiques (SDES)}.
 \newblock Chiffres cl{\'e}s de la mer et du littoral---{\'E}dition 2024,
-  2024.  \hl{Available online:} %MDPI: Please add the url.
+  2024. Available online: %MDPI: Please add the url. % AUTHOR: url added.
+  \newblock {\url{https://www.statistiques.developpement-durable.gouv.fr/chiffres-cles-de-la-mer-et-du-littoral-edition-2024}}
  (accessed on 17 May 2026).
 
 
@@ -1209,7 +1209,7 @@ Liu, Y.; Xiao, X.; Li, J.; Wang, X.; Chen, B.; Sun, C.; Wang, J.; Tian, P.;
 \bibitem[{European Environment Agency}(2020)]{EEA_CLC2018}
 {European Environment Agency}.
 \newblock {CORINE} Land Cover 2018 (Vector);
-\newblock Technical Report, Copernicus Land Monitoring Service;  \hl{European Environment Agency: Copenhagen, Denmark,} %MDPI: We added the name of the publisher and their location. Please confirm. The following highlights are the same.
+\newblock Technical Report, Copernicus Land Monitoring Service;  European Environment Agency: Copenhagen, Denmark, %MDPI: We added the name of the publisher and their location. Please confirm. The following highlights are the same. %AUTHOR: yes, confirm.
  2020;
 \newblock Version 2020\_20u1.
 
@@ -1290,7 +1290,7 @@ Miossec, A.
 Blondy, C.; Plumejeaud, C.; Vacher, L.; Vye, D.; Bontet, C.
 \newblock Do second home owners only play a secondary role in coastal
   territories? A case study in Charente-Maritime (France). In {\em The
-  Routledge Handbook of Second Home Tourism and Mobilities}; Routledge: \hl{Abingdon, UK,} %MDPI: We added the location of the publisher. Please confirm. The following highlights are the same.
+  Routledge Handbook of Second Home Tourism and Mobilities}; Routledge: Abingdon, UK, %MDPI: We added the location of the publisher. Please confirm. The following highlights are the same. %AUTHOR: yes, confirm.
   2018;
   pp. 233--244.
 
@@ -1298,7 +1298,7 @@ Blondy, C.; Plumejeaud, C.; Vacher, L.; Vye, D.; Bontet, C.
 {EUROSION Project}.
 \newblock \textit{Living with Coastal Erosion in Europe: Sediment and Space for
   Sustainability};  French coastline erosion statistics widely cited in national coastal
-  studies; \hl{Eurosion: Hague, The Netherlands,} 2004.
+  studies; Eurosion: Hague, The Netherlands, 2004. %AUTHOR: yes, confirm.
 \newblock 
 
 \bibitem[Meur-Férec and Morel(2011)]{meur-ferec2011}
