@@ -286,21 +286,17 @@ Urban sprawl, extreme artificialization of shoreline, destruction of \textit{Pos
 
 {The three facades display a clear south-to-north thermal gradient, with the southern Mediterranean coast (mean annual temperature $\approx$16~\degree C) being substantially warmer than the western Atlantic ($\approx$13.5~\degree C) and northern Channel ($\approx$11.5~\degree C) coasts. This gradient reflects the combined influence of latitude, regional atmospheric circulation, and the moderating effect of adjacent seas. In contrast, precipitation follows an inverse spatial pattern, with the wetter Atlantic and Channel coasts (typically 800--900~mm yr$^{-1}$) receiving considerably more rainfall than the Mediterranean region. The southern coast is characterized by a drier and more variable precipitation regime (typically 550--700~mm yr$^{-1}$), where annual rainfall is concentrated in episodic high-intensity events separated by prolonged dry periods. Consequently, each coastal facade experiences a distinct combination of thermal and hydrological conditions that contributes to regional differences in ecological processes, agricultural activities, and urban development trajectories.}
 
-
 \begin{figure}[H]
-%\centering+
-
-\begin{adjustwidth}{-\extralength}{0cm}
-\centering %% If there is a figure in wide page, please release command \centering, for Table, ``\textwidth" should be ``\fulllength"
-
-\includegraphics[width=15.5cm]{Figure_climate.png}
-\end{adjustwidth}
-\caption{{\hl{Annual} %MDPI: Please change the hyphen (-) between numbers into an en dash (−, “U+2013”), e.g., “2019-2022” should be “2019–2022” and “0-9” should be “0–9”.
+%\begin{adjustwidth}{-\extralength}{-0.2cm}
+\centering
+\includegraphics[width=14.0cm]{Figure_climate.png}
+%\end{adjustwidth}
+\caption{{Annual %MDPI: Please change the hyphen (-) between numbers into an en dash (−, “U+2013”), e.g., “2019-2022” should be “2019–2022” and “0-9” should be “0–9”. % AUTHOR: corrected.
  mean surface air temperature (line) and total annual precipitation (bars) for the northern (English Channel), western (Atlantic), and southern (Mediterranean) French coastal regions over the period 1991--2025. Dashed red lines show the linear temperature trend for each region. Values represent region-averaged annual climate indicators compiled for the coastal zones analyzed in this study. data used for producing figure: Météo-France station/climatological data (the national reference for France \cite{MeteoFranceDonnees})---the portal of public data (meteo.data.gouv.fr) and the SAFRAN reanalysis~\cite{Vidal2010SAFRAN}. Software used to produce figure: Python, libraries Matplotlib (version 3.10.8) and NumPy (version 2.4.4)---used to process the year array (1991–2025). Source: made by the author.}}
 \label{fig:climate}
 \end{figure}
 
-\clearpage 
+%\clearpage 
 {Beyond these spatial contrasts, all three regions exhibit clear long-term climatic changes over the study period. Annual mean temperatures show a statistically consistent warming trend of approximately 0.3--0.4~\degree C per decade, with the strongest increase observed along the Mediterranean coast. This warming is accompanied by a modest decline in annual precipitation in the southern and western regions, although substantial interannual variability remains evident. The combination of rising temperatures and decreasing rainfall has important implications for water availability, vegetation stress, wildfire risk, and the resilience of coastal ecosystems. These evolving climatic conditions therefore constitute an important environmental driver of landscape transformation in French coastal zones. The observed multi-decadal trends provide the broader context within which the land cover dynamics analyzed in this study have occurred, linking regional climatic change to the coastal pressures and environmental vulnerabilities discussed throughout \linebreak  this work.}
 
 
@@ -323,21 +319,21 @@ All preprocessing steps were conducted in GRASS GIS (version 8.4), an open-sourc
 The preprocessing workflow included the following sequential steps:
 
 \begin{enumerate}[leftmargin=*,labelsep=5mm]
-\item \textit{\hl{Data import and reprojection}%MDPI: Please confirm if the italics are necessary; if not, please remove them. The following highlights are the same.
-}: All Sentinel-2 tiles were imported into GRASS GIS using \texttt{\hl{r.in.gdal}%MDPI: Please confirm if the special font needs to be retained. Please check all the special fonts in the whole tex
-} and reprojected to Lambert-93 (EPSG:2154), the official French conformal conic projection that minimizes distortion over the French territory. Reprojection was performed using bilinear resampling to preserve radiometric integrity.
+\item Data import and reprojection%MDPI: Please confirm if the italics are necessary; if not, please remove them. The following highlights are the same. %AUTHOR: not necessary, I remoted it.
+: All Sentinel-2 tiles were imported into GRASS GIS using r.in.gdal%MDPI: Please confirm if the special font needs to be retained. Please check all the special fonts in the whole tex
+ and reprojected to Lambert-93 (EPSG:2154), the official French conformal conic projection that minimizes distortion over the French territory. Reprojection was performed using bilinear resampling to preserve radiometric integrity.
 
-\item \textit{\hl{Atmospheric correction verification}}: Level-2A BOA reflectance values were verified for consistency across tiles using inter-tile comparison of stable reference targets (water bodies, dense forest, bare rock). Residual radiometric inconsistencies were corrected through empirical line normalization using \texttt{r.mapcalc}.
+\item Atmospheric correction verification: Level-2A BOA reflectance values were verified for consistency across tiles using inter-tile comparison of stable reference targets (water bodies, dense forest, bare rock). Residual radiometric inconsistencies were corrected through empirical line normalization using \texttt{r.mapcalc}.
 
-\item \textit{\hl{Cloud masking}}: Scene classification layer (SCL) bands provided with Level-2A products were used to generate cloud masks. Pixels classified as cloud (classes 8--10) and cloud shadow (class 3) were excluded using \texttt{r.mapcalc}. Remaining thin cirrus artifacts were identified through visual inspection and masked manually.
+\item Cloud masking: Scene classification layer (SCL) bands provided with Level-2A products were used to generate cloud masks. Pixels classified as cloud (classes 8--10) and cloud shadow (class 3) were excluded using \texttt{r.mapcalc}. Remaining thin cirrus artifacts were identified through visual inspection and masked manually.
 
-\item \textit{\hl{Mosaicking}}: Adjacent tiles within each coastal region were mosaicked using \texttt{r.patch} after reprojection alignment. Mosaic edge effects were minimized by applying a 100-pixel feathering zone along tile boundaries.
+\item Mosaicking: Adjacent tiles within each coastal region were mosaicked using \texttt{r.patch} after reprojection alignment. Mosaic edge effects were minimized by applying a 100-pixel feathering zone along tile boundaries.
 
-\item \textit{\hl{Temporal compositing}}: Summer composites for 2015 and 2025 were generated by applying a median temporal aggregation to the available cloud-free scenes using \texttt{r.series} with the median statistic. Median compositing effectively suppresses residual cloud and shadow contamination while preserving spectral fidelity.
+\item Temporal compositing: Summer composites for 2015 and 2025 were generated by applying a median temporal aggregation to the available cloud-free scenes using \texttt{r.series} with the median statistic. Median compositing effectively suppresses residual cloud and shadow contamination while preserving spectral fidelity.
 
-\item \textit{\hl{Vegetation indices}}: Spectral indices were computed to augment the band stack for classification. The normalized difference vegetation index (NDVI) and normalized difference water index (NDWI) were computed using \texttt{i.vi} and \texttt{r.mapcalc}, respectively, following standard formulations.
+\item Vegetation indices: Spectral indices were computed to augment the band stack for classification. The normalized difference vegetation index (NDVI) and normalized difference water index (NDWI) were computed using \texttt{i.vi} and \texttt{r.mapcalc}, respectively, following standard formulations.
 
-\item \textit{\hl{Temporal stack preparation}}: Final multispectral composite rasters were organized into GRASS GIS temporal databases using \texttt{t.rast.series} to facilitate time-series analysis and change detection workflows.
+\item Temporal stack preparation: Final multispectral composite rasters were organized into GRASS GIS temporal databases using \texttt{t.rast.series} to facilitate time-series analysis and change detection workflows.
 \end{enumerate}
 
 The following GRASS GIS modules were central to the preprocessing workflow:
