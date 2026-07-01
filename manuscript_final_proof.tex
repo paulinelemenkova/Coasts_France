@@ -74,34 +74,31 @@
 
 \newcommand{\orcidauthorA}{0000-0002-5759-1089}
 
-\Author{\hl{Polina Lemenkova} %MDPI: Please carefully check the accuracy of names and affiliations.
- $^{1,2,3,4}$\orcidA{}}
+\Author{Polina Lemenkova %MDPI: Please carefully check the accuracy of names and affiliations.
+ $^{1,2,3,4}$\orcidA{}} %AUTHOR: yes, confirm the accuracy of names and affiliations.
 
 \AuthorNames{Polina Lemenkova}
 
 %\AuthorCitation{Lemenkova, P.}
 
 \address{%
-$^{1}$ \quad Bureau de Recherches G\'eologiques et Mini\`eres (BRGM)\hl{,} %MDPI: We changed the dot to a comma. Please confirm. The following highlight is the same
+$^{1}$ \quad Bureau de Recherches G\'eologiques et Mini\`eres (BRGM), %MDPI: We changed the dot to a comma. Please confirm. The following highlight is the same %AUTHOR: yes, confirm.
  3 Avenue Claude-Guillemin, 45060 Orl\'eans, France; polina.lemenkova@tech-orleans.fr; Tel.: +33-063-314-8601
 
-$^{2}$ \quad Le Studium, Institut d'Etudes Avanc\'ees du Val de Loire\hl{,} 1 rue Dupanloup, 45000 Orl\'eans, France
+$^{2}$ \quad Le Studium, Institut d'Etudes Avanc\'ees du Val de Loire, 1 rue Dupanloup, 45000 Orl\'eans, France
 
 $^{3}$ \quad Le laboratoire PRISME, Universit\'e d'Orl\'eans, Institut National des Sciences Appliqu\'ees de Centre-Val de Loire (INSA CVL, UR 4229), Ch\^ateau de la Source, 45100 Orl\'eans, France
 
-$^{4}$ \quad La Technopole d'Orl\'eans\hl{,} 1 avenue du Champ de Mars, 45100 Orl\'eans, France
+$^{4}$ \quad La Technopole d'Orl\'eans, 1 avenue du Champ de Mars, 45100 Orl\'eans, France
 }
 
 %\corres{Correspondence: polina.lemenkova@tech-orleans.fr; Tel.: (+33)0633148601 (P.L.)}
 
 \keyword{coastal land cover; Sentinel-2; GRASS GIS; shoreline environments; coastal dynamics; France; remote sensing; time series analysis; land cover change; coastal monitoring}
 
-\PACS{\hl{92.10.Vv;} %MDPI: Please confirm if 'PACS' section is unnecessary and can be removed.
- 95.75.Qr; 42.68.Wt; 93.30.Ge}
-\MSC{\hl{62H30;} %MDPI: Please confirm if 'MSC' section is unnecessary and can be removed.
- 68U35; 62M30; 68T05}
-\JEL{\hl{Q24;} %MDPI: Please confirm if 'JEL' section is unnecessary and can be removed..
- Q54; R14; Q57; Q01}
+%MDPI: Please confirm if 'PACS' section is unnecessary and can be removed. %AUTHOR: yes, can be removed (I removed them)
+ %MDPI: Please confirm if 'MSC' section is unnecessary and can be removed. %AUTHOR: yes, can be removed (I removed them)
+%MDPI: Please confirm if 'JEL' section is unnecessary and can be removed. %AUTHOR: yes, can be removed (I removed them)
 
 \abstract{French coastal systems are characterized by strong environmental gradients and increasing anthropogenic pressures, resulting in rapid land cover transformations across coastal landscapes. This study investigates land cover dynamics along the northern, western, and southern French coasts using Sentinel-2 summer image time series acquired between 2015 and 2025. The research aims to identify the most dynamic coastal regions and determine where land cover transitions are most pronounced. A harmonized workflow was developed in GRASS GIS for preprocessing Sentinel imagery, generating seasonal composites, classifying land cover using a Random Forest (RF) supervised algorithm, and detecting changes through time. All imagery was processed using CORINE Land Cover (Level~1) classification nomenclature and projected to Lambert-93 (EPSG:2154). Comparative analyses were performed among the three coastal regions using statistical indicators of change intensity, persistence, and transition rates. The results reveal substantial regional differences in coastal dynamics, with the southern Mediterranean coast exhibiting the highest transformation rate (22.9\% of total area changed, at 2.29\% yr$^{-1}$), followed by the northern English Channel coast (18.6\%; 1.86\% yr$^{-1}$) and the western Atlantic coast (14.2\%; 1.42\%~yr$^{-1}$). Urbanization and natural vegetation loss were identified as dominant transition types across all regions. The study demonstrates the effectiveness of Sentinel-2 time series and open-source GRASS GIS methods for long-term coastal monitoring and provides a reproducible framework for large-scale assessments of coastal land cover dynamics in~Europe.
 }
@@ -116,7 +113,7 @@ $^{4}$ \quad La Technopole d'Orl\'eans\hl{,} 1 avenue du Champ de Mars, 45100 Or
 
 Coastal environments are among the most dynamic socio-ecological systems in Europe and are increasingly affected by urbanization, tourism, shoreline erosion, sea-level rise, and land use intensification \citep{Petzold2024,Igigabel2024,IPCCar6wg2}. French coastal regions encompass diverse Atlantic, English Channel, and Mediterranean systems characterized by strong climatic, geomorphological, and socioeconomic contrasts \citep{Karadimitriou2022}. Monitoring spatial and temporal land cover dynamics is therefore essential for sustainable coastal management and climate adaptation \mbox{planning~\citep{Vousdoukas2020,Zambon2023}}. {These continental-scale pressures take on particular significance in France, whose coastline combines exceptional length and physical diversity with some of the highest concentrations of coastal population and activity in Europe.}
 
-The French coastline stretches over approximately \hl{5853} %MDPI: Commas are only used for numbers with five or more digits. We have removed them in four-digit numbers. Please confirm.
+The French coastline stretches over approximately 5853 %MDPI: Commas are only used for numbers with five or more digits. We have removed them in four-digit numbers. Please confirm. %AUTHOR: yes, confirm.
  km, encompassing three distinct maritime facades: the English Channel to the north, the Atlantic Ocean to the west, and the Mediterranean Sea to the south \cite{clave2021littoraux}. Each system presents unique geomorphological characteristics, climatic regimes, and land use histories shaped by centuries of human occupation and resource exploitation. With nearly one-third of France's population living within 25~km of the coast, these zones are subject to intense demographic, economic, and environmental pressures \citep{sdes2024merlittoral}. The combination of natural hazards---including erosion, flooding, and salinization—and anthropogenic pressures makes them among the most vulnerable landscapes in Western Europe. 
 
 {Managing this vulnerability across three such contrasting maritime facades requires consistent, large-area observation and coordinated governance capable of operating uniformly along the entire national coastline.} The importance of coastal monitoring for Europe is increasingly recognized in policy frameworks such as the Integrated Coastal Zone Management (ICZM) Recommendation and the Marine Strategy Framework Directive \citep{EEA2019}. Remote sensing provides an efficient and scalable means to monitor these systems at the national and regional scales required by operational coastal governance \citep{Graffin2024,Liu2023}.
@@ -197,15 +194,6 @@ Based on the review of existing literature on Mediterranean and Atlantic coastal
 
 The French coastline extends across the English Channel, Atlantic Ocean, and Mediterranean Sea, encompassing a wide range of coastal geomorphologies, climatic conditions, and land use patterns. With a total length of approximately 5853~km (metropolitan France), it constitutes one of the longest and most geomorphologically diverse coastlines in Western Europe, {Figure} \ref{fig:overview}. 
 
-
-
-\hl{The} %MDPI: We moved the paragraph here to avoid big blank space. Please confirm
- three maritime facades differ substantially in tidal regime, wave energy, substrate composition, climatic exposure, and degree of human modification \citep{paskoff2001geomorphologie}. This study focuses on three main regions: northern France (Normandy, English Channel coast), western Atlantic France (Nouvelle-Aquitaine, Brittany), and southern Mediterranean France (Provence-Alpes-C\^ote d'Azur, Languedoc-Roussillon) \citep{deboudt2012atlas}. {Detailed maps of the three study regions and their Sentinel-2 tile coverage are presented in Figure~\ref{fig:studyareas}.}
-
-
-
-Climate gradients across these regions are pronounced. Northern France experiences a temperate oceanic climate with cool summers, frequent rainfall, and a significant tidal range of up to 12~m in the Bay of Mont-Saint-Michel \citep{bonnot-courtois2002mont}. Western France transitions from sub-oceanic to oceanic regimes, with the Atlantic facade exposed to energetic swell systems and intense westerly storms \citep{suanez2012tempetes}. The southern Mediterranean coast is characterized by a semi-arid summer climate, mild winters, the influence of the Mistral wind, and a microtidal regime with ranges typically below 0.5~m \citep{certain2002golfe}. These climatic contrasts fundamentally condition the geomorphological behavior and ecological character of each coastal system.
-
 \begin{figure}[H]
 %\centering
 \includegraphics[width=11cm]{Figure_01.png}
@@ -214,10 +202,15 @@ Climate gradients across these regions are pronounced. Northern France experienc
 \end{figure}
 \vspace{-6pt}
 
+The %MDPI: We moved the paragraph here to avoid big blank space. Please confirm %AUTHOR: yes, confirm.
+ three maritime facades differ substantially in tidal regime, wave energy, substrate composition, climatic exposure, and degree of human modification \citep{paskoff2001geomorphologie}. This study focuses on three main regions: northern France (Normandy, English Channel coast), western Atlantic France (Nouvelle-Aquitaine, Brittany), and southern Mediterranean France (Provence-Alpes-C\^ote d'Azur, Languedoc-Roussillon) \citep{deboudt2012atlas}. {Detailed maps of the three study regions and their Sentinel-2 tile coverage are presented in Figure~\ref{fig:studyareas}.}
+
+Climate gradients across these regions are pronounced. Northern France experiences a temperate oceanic climate with cool summers, frequent rainfall, and a significant tidal range of up to 12~m in the Bay of Mont-Saint-Michel \citep{bonnot-courtois2002mont}. Western France transitions from sub-oceanic to oceanic regimes, with the Atlantic facade exposed to energetic swell systems and intense westerly storms \citep{suanez2012tempetes}. The southern Mediterranean coast is characterized by a semi-arid summer climate, mild winters, the influence of the Mistral wind, and a microtidal regime with ranges typically below 0.5~m \citep{certain2002golfe}. These climatic contrasts fundamentally condition the geomorphological behavior and ecological character of each coastal system.
+
 \begin{figure}[H]
 %\centering
 \includegraphics[width=13.8cm]{Figure_02.png}
-\caption{\hl{Detailed} %MDPI: We moved the figure after the first citation. Please confirm.
+\caption{Detailed %MDPI: We moved the figure after the first citation. Please confirm. %AUTHOR: yes, confirm.
  study area maps for the northern, western, and southern French coastal regions and coverage of Sentinel-2A tiles. Software: QGIS, version 4.0.2 Norrköping. Map source: author.}
 \label{fig:studyareas}
 \end{figure}
@@ -241,12 +234,10 @@ The southern Mediterranean coast of France (Provence-Alpes-C\^ote d'Azur and Occ
 
 The Mediterranean coastal climate generates strong tourism seasonality, with visitor flows peaking sharply in July and August and reaching 80--90~million tourist nights annually in coastal departments. The Camargue—France's largest wetland complex at the mouth of the Rhône—is a UNESCO Biosphere Reserve and Ramsar site, supporting globally significant flamingo breeding populations and halophytic vegetation communities. Despite its protected status, the Camargue is threatened by sea-level rise, reduced Rh\^one sediment supply, and agricultural water management. Mediterranean coastal vegetation, including maquis and garrigue scrublands, faces fire risk that is projected to increase under climate change \citep{trabaud2005feux}.
 
-
-
-The following table synthesizes the geographical, demographic, and anthropogenic pressures dictating the vulnerabilities of France's distinct maritime facades.
+The key environmental and anthropogenic differences between these three maritime facades are summarized in Table~\ref{tab:regions} which synthesizes the geographical, demographic, and anthropogenic pressures dictating the vulnerabilities of France's distinct maritime facades.
 
 \begin{table}[H]
-\caption{\hl{Characteristics} %MDPI: Please cite this table in the text and ensure that the first citation of each table appears in numerical order.
+\caption{Characteristics %MDPI: Please cite this table in the text and ensure that the first citation of each table appears in numerical order. %AUTHOR: done. 
  of the analyzed French coastal regions.}
 \label{tab:regions}
 %\centering
@@ -254,15 +245,14 @@ The following table synthesizes the geographical, demographic, and anthropogenic
 \begin{adjustwidth}{-\extralength}{0cm}
 \begin{tabularx}{\fulllength}{ p{1.5cm}  p{2.0cm}  p{3.5cm}  p{3.5cm}  p{4.4cm} c }
  \toprule
-\textbf{Region} & \textbf{Climate} & \textbf{Coastal Type} & \textbf{Main Land Uses} & \textbf{Main Pressures} & \textbf{\hl{Citation} %MDPI: Please confirm if there is any content missing in this column.
-} \\
+\textbf{Region} & \textbf{Climate} & \textbf{Coastal Type} & \textbf{Main Land Uses} & \textbf{Main Pressures}  \\
 \midrule
 
 Northern &
 Temperate/\linebreak  Oceanic &
 Estuarine/Tidal, featuring high chalk cliffs (e.g., Normandy) and wide muddy/sandy beaches. &
 Agriculture, urban development, maritime transport, commercial fishing, and seaside tourism. &
-Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff. &
+Industrialization, severe cliff/coastal erosion, heavy shipping lanes pollution, and agricultural nitrate runoff.
  \\
 \midrule
 
@@ -270,7 +260,7 @@ Western &
 Oceanic/\linebreak  Extreme Maritime &
 Atlantic/Dune, characterized by jagged granite rocks, deep rias, linear beaches, and sand dunes. &
 Forestry, tourism, intensive livestock agriculture, viticulture, fishing, and oyster aquaculture. &
-Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastic deposition. &
+Coastal development, green algae blooms (eutrophication), marine submersion, dune erosion, and microplastic deposition.
  \\
 \midrule
 
@@ -278,7 +268,7 @@ Southern &
 Mediterranean &
 Lagoon/Urban, containing low-lying sandy beaches, coastal wetlands, rocky calanques {(steep-sided limestone inlets)}, and steep cliffs. &
 Tourism, urbanization, high-end yachting/marinas, viticulture, salt production, and major naval/commercial ports. &
-Urban sprawl, extreme artificialization of shoreline, destruction of \textit{Posidonia} meadows, seasonal water stress, and waste treatment issues. &
+Urban sprawl, extreme artificialization of shoreline, destruction of \textit{Posidonia} meadows, seasonal water stress, and waste treatment issues.
  \\
 
 \bottomrule
