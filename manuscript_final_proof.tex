@@ -365,12 +365,11 @@ The following GRASS GIS modules were central to the preprocessing workflow:
 
 \includegraphics[width=18.3cm]{Figure_03.png}
 \end{adjustwidth}
-\caption{{\hl{Detailed} %MDPI: 1. Please confirm whether an explanation of the colors in 1--6 needs to be added to the figure caption. 2. Please confirm whether the unclear content in the map affects scientific understanding and if it does, please revise it. 3. To avoid large blank spaces on the page, we moved Figure 4 to Section 3.4. Please confirm
- step-by-step overview of the Sentinel-2 image processing pipeline applied in this study, complementing the general GRASS GIS workflow shown in Figure~\ref{fig:workflow}. The chain proceeds through seven stages: (1)~data acquisition of Sentinel-2 MSI Level-2A imagery (2015--2025) over the northern, western, and southern coasts; (2)~preprocessing, including atmospheric correction (Sen2Cor), cloud and shadow masking (QA60, SCL), reprojection to Lambert-93, mosaicking and clipping to the coastal buffer; (3)~generation of annual summer median composites (June--September); (4)~Random Forest land cover classification into CORINE-aligned classes with accuracy assessment (overall accuracy, Kappa); (5)~post-classification change detection (year-to-year comparison, change-matrix generation, and change maps of gains, losses, and persistence); (6)~statistical analysis of per-class areas and 2015--2025 trends; and (7)~spatial comparison of change across the three coastal regions. The software and tools, coordinate reference system (Lambert-93, EPSG:2154), and principal outputs of each stage are annotated on the diagram. Source: author.}}
+\caption{Detailed %MDPI: 1. Please confirm whether an explanation of the colors in 1--6 needs to be added to the figure caption. 2. Please confirm whether the unclear content in the map affects scientific understanding and if it does, please revise it. 3. To avoid large blank spaces on the page, we moved Figure 4 to Section 3.4. Please confirm 
+%AUTHOR: 1: I agree; no additional explanation of the colors in 1–6 is needed, as they are sufficiently clear in the context of the figure. 2: I confirm that the content in the map does not affect scientific understanding and remains accurate for the purposes of this study; therefore, no revisions are necessary. 3: I confirm that moving Figure 4 to Section 3.4 is acceptable and appropriate to improve the layout and avoid large blank spaces.
+ step-by-step overview of the Sentinel-2 image processing pipeline applied in this study, complementing the general GRASS GIS workflow shown in Figure~\ref{fig:workflow}. The chain proceeds through seven stages: (1)~data acquisition of Sentinel-2 MSI Level-2A imagery (2015--2025) over the northern, western, and southern coasts; (2)~preprocessing, including atmospheric correction (Sen2Cor), cloud and shadow masking (QA60, SCL), reprojection to Lambert-93, mosaicking and clipping to the coastal buffer; (3)~generation of annual summer median composites (June--September); (4)~Random Forest land cover classification into CORINE-aligned classes with accuracy assessment (overall accuracy, Kappa); (5)~post-classification change detection (year-to-year comparison, change-matrix generation, and change maps of gains, losses, and persistence); (6)~statistical analysis of per-class areas and 2015--2025 trends; and (7)~spatial comparison of change across the three coastal regions. The software and tools, coordinate reference system (Lambert-93, EPSG:2154), and principal outputs of each stage are annotated on the diagram. Source: author.}
 \label{fig:s2processing}
 \end{figure}
-
-
 
 
 \subsection{Land Cover Classification}
@@ -393,18 +392,20 @@ The classification scheme was developed in accordance with the CORINE Land Cover
 
 \begin{figure}[H]
 %\centering
-\includegraphics[width=11.8cm]{Figure_workflow.png}
-\caption{{\hl{Workflow} %MDPI: 1.  To avoid large blank spaces on the page, we moved Figure 4 to Section 3.4. Please confirm. 2. Please change the hyphen (-) between numbers into an en dash (−, “U+2013”), e.g., “2019-2022” should be “2019–2022” and “0-9” should be “0–9”.
+\includegraphics[width=15.0cm]{Figure_workflow.png}
+\caption{{Workflow %MDPI: 1.  To avoid large blank spaces on the page, we moved Figure 4 to Section 3.4. Please confirm. 2. Please change the hyphen (-) between numbers into an en dash (−, “U+2013”), e.g., “2019-2022” should be “2019–2022” and “0-9” should be “0–9”.
+%AUTHOR: 1.  I agree with moving of figure. 2. hyphen between numbers is changed into an en dash in 2015–2025.
  of the Sentinel-2 preprocessing, Random Forest classification, and land cover change-detection chain implemented in GRASS GIS, with the principal GRASS GIS modules indicated at each processing stage. Source: author.}}
 \label{fig:workflow}
 \end{figure}
 
+The land cover classification scheme, including descriptions and spectral characteristics derived from the Sentinel-2 imagery, is detailed in Table \ref{tab:classes}.
+
 \begin{table}[H]
-\caption{\hl{Land} %MDPI: Please cite this table in the text and ensure that the first citation of each table appears in numerical order.
+\caption{Land %MDPI: Please cite this table in the text and ensure that the first citation of each table appears in numerical order. %AUTHOR: corrected (citation added).
  cover classes used in the classification scheme, with description and key spectral characteristics derived from Sentinel-2 composite imagery.}
 %\centering
 \begin{adjustwidth}{-\extralength}{0cm}
-%\begin{tabularx}{\fulllength}{lLL}
 \begin{tabularx}{\fulllength}{lXX}
 \toprule
 \textbf{Class} & \textbf{Description} & \textbf{Spectral Characteristics} \\
@@ -444,7 +445,7 @@ Classification performance was evaluated using an independent validation dataset
 {Because this study relies exclusively on satellite and ancillary geospatial datasets, the reliability of the classification was verified entirely through statistical procedures. The stability of the Random Forest models was quantified using repeated stratified $k$-fold cross-validation ($k = 10$, ten repetitions), which produced mean overall accuracies consistent with the independent hold-out validation and low cross-fold variance (standard deviation below 1.5\%). Non-parametric bootstrap resampling of the validation set (1000 iterations) was used to derive 95\% confidence intervals for the overall accuracy and Cohen's Kappa of each region, and McNemar's test confirmed that the inter-regional differences in classification accuracy were statistically significant ($p < 0.05$). These statistical verification procedures are consistent with the image-based validation results reported in Table~\ref{tab:accuracy} and confirm that the mapped land cover provides a reliable basis for the change-detection analysis.}
 
 \begin{table}[H]
-\caption{\hl{Classification} %MDPI: Please confirm the alignment change.
+\caption{Classification %MDPI: Please confirm the alignment change. %AUTHOR: yes, confirm.
  accuracy metrics for each coastal region (Random Forest classification of Sentinel-2 summer composites, 2025 epoch).}
 %\centering
 \begin{tabularx}{\textwidth}{lXXX}
@@ -485,7 +486,7 @@ Regional comparisons were conducted using trend analysis and spatial statistics 
 \begin{figure}[H]
 %\centering
 	\includegraphics[width=10.0cm]{Figure_04.png}
-\caption{\hl{GRASS} %MDPI: We moved the figure after the first citation. Please confirm
+\caption{GRASS %MDPI: We moved the figure after the first citation. Please confirm %AUTHOR: yes, confirm.
  GIS-based analytical framework for regional comparison of coastal land cover dynamics. Image source: author.}
 \label{fig:framework}
 \end{figure}
@@ -510,21 +511,21 @@ By 2025, all three regions showed measurable shifts in land cover composition re
 \begin{figure}[H]
 %\centering
 \includegraphics[width=13.8cm]{Figure_05.png}
-	\caption{\hl{Land} %MDPI: Please change the hyphen (-) into a minus sign (−, “U+2212”) in the figure, e.g., “-1” should be “−1”.
+	\caption{Land %MDPI: Please change the hyphen (-) into a minus sign (−, “U+2212”) in the figure, e.g., “-1” should be “−1”. %AUTHOR: corrected - minus sign is used for plotting the figure.
  cover maps for southern coasts of France (Provence-Alpes-C\^ote d'Azur --- `PACA') in 2015 and 2025. Map software: GRASS GIS. Map source: author.}
 \label{fig:maps_south}
 \end{figure}
 
 \begin{figure}[H]
 \includegraphics[width=13.8cm]{Figure_06.png}
-\caption{\hl{Land} %MDPI: Please change the hyphen (-) into a minus sign (−, “U+2212”) in the figure, e.g., “-1” should be “−1”.
+\caption{Land %MDPI: Please change the hyphen (-) into a minus sign (−, “U+2212”) in the figure, e.g., “-1” should be “−1”. %AUTHOR: corrected - minus sign is used for plotting the figure.
  cover maps for northern coasts of France (Normandy) in 2015 and 2025. Map software: GRASS GIS. Map source: author.}
 \label{fig:maps_north}
 \end{figure}
 \vspace{-6pt}
 \begin{figure}[H]
 \includegraphics[width=13.8cm]{Figure_07.png}
-\caption{\hl{Land} %MDPI: Please change the hyphen (-) into a minus sign (−, “U+2212”) in the figure, e.g., “-1” should be “−1”.
+\caption{Land %MDPI: Please change the hyphen (-) into a minus sign (−, “U+2212”) in the figure, e.g., “-1” should be “−1”. %AUTHOR: corrected - minus sign is used for plotting the figure.
  cover maps for western coasts of France (Nouvelle-Aquitaine) in 2015 and 2025. Map software: GRASS GIS. Map source: author.}
 \label{fig:maps_west}
 \end{figure}
@@ -533,7 +534,7 @@ By 2025, all three regions showed measurable shifts in land cover composition re
 
 The strongest land cover dynamics were identified in the southern Mediterranean coast, which recorded the highest total changed area (22.9\% of total mapped extent), annual change rate (2.29\% yr$^{-1}$), and lowest stability index (0.74) among the three regions studied (Table~\ref{tab:regional_change_statistics}). Change intensity was spatially concentrated in urban coastal corridors, particularly around Marseille, Toulon, Nice, and Montpellier, where urbanization pressures intersected with fire-disturbed scrubland recovery dynamics. {The spatial distribution of change intensity along the three coasts is mapped in Figure~\ref{fig:change}.}
 \begin{table}[H]
-\caption{\hl{Regional} %MDPI: Please confirm whether the alignment of the table needs to be maintained.
+\caption{Regional %MDPI: Please confirm whether the alignment of the table needs to be maintained. %AUTHOR: alignment is not necessary.
  land cover change statistics for the three French coastal regions (2015--2025).}
 \label{tab:regional_change_statistics}
 \small
@@ -575,7 +576,7 @@ Southern Mediterranean coast
 
 \begin{figure}[H]
 \includegraphics[width=13.5cm]{Figure_08.png}
-\caption{\hl{Spatial } %MDPI: Please confirm whether the unclear content (the superscript number of the unit 'km') in this figure affects scientific understanding and if it does, please revise it.
+\caption{Spatial %MDPI: Please confirm whether the unclear content (the superscript number of the unit 'km') in this figure affects scientific understanding and if it does, please revise it. % AUTHOR: I confirm that the superscript notation for the unit 'km' is clear in context and does not affect scientific understanding; therefore, the revisions are not necessary here.
 distribution of land cover change intensity along French coasts between 2015 and 2025. Source: author.}
 \label{fig:change}
 \end{figure}
@@ -600,12 +601,10 @@ Coastal dune and beach dynamics showed localized but significant changes in the 
 
 The southern Mediterranean coast showed the most pronounced land cover dynamics of the three regions, with 22.9\% of total area experiencing class change over the decade. Urban and artificial surface expansion was the dominant process, with 421~km$^2$ of natural vegetation converted to urban uses—the largest absolute area of any transition type in any region (Table~\ref{tab:dominant_transitions}). Spatial concentration of urban expansion was strongest around the Marseille--Aix-en-Provence agglomeration, the Côte d'Azur corridor from Toulon to the Italian border, and the Montpellier--Sète peri-urban fringe.
 
-
-
 Mediterranean scrubland and garrigue experienced significant loss (17.3\% area reduction), partly attributable to repeated wildfire cycles—particularly the large 2022 fires in the Var and Gironde departments—followed by post-fire urban encroachment into recovering vegetation zones. Wetland loss was documented primarily in the transition zone between the Camargue wetland complex and peri-urban Fos-sur-Mer industrial zone, and along coastal lagoon margins subjected to tourism infrastructure development. These dynamics are consistent with regional trends documented across the northern Mediterranean basin.
 
 \begin{table}[H]
-\caption{\hl{Dominant} %MDPI: Please confirm whether the alignment of the table needs to be maintained.
+\caption{Dominant %MDPI: Please confirm whether the alignment of the table needs to be maintained. %AUTHOR: alignment is not necessary,
  land cover transitions by coastal region (2015--2025).}
 \label{tab:dominant_transitions}
 %\centering
